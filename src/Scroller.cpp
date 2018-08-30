@@ -117,15 +117,6 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
   if(d->ignoreEvent(object, event))
     return false;
 
-  union
-  {
-    QEvent* event;
-    QMouseEvent* mouseEvent;
-    QChildEvent* childEvent;
-  }e{nullptr};
-
-  e.event = event;
-
   QWidget* widget = nullptr;
   if(object->isWidgetType())
     widget = dynamic_cast<QWidget*>(object);
@@ -135,8 +126,16 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
   switch(event->type())
   {
   case QEvent::MouseButtonPress: case QEvent::MouseButtonRelease: case QEvent::MouseMove:
+  {
     if(widget)
-      pos = widget->mapTo(d->scrollArea, e.mouseEvent->pos());
+    {
+      auto mouseEvent = dynamic_cast<QMouseEvent*>(event);
+      if(mouseEvent)
+        pos = widget->mapTo(d->scrollArea, mouseEvent->pos());
+    }
+    break;
+  }
+
   default:
     break;
   };
@@ -147,10 +146,12 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
   //Each time a child is added we need to install an event filter for it, this is because the mouse
   //event will go to the lowest child first and we need to catch them.
   case QEvent::ChildAdded:
-    if(e.childEvent->child())
+  {
+    auto childEvent = dynamic_cast<QChildEvent*>(event);
+    if(childEvent && childEvent->child())
     {
       QObjectList children;
-      children.append(e.childEvent->child());
+      children.append(childEvent->child());
       while(!children.isEmpty())
       {
         QObject* child = children.takeLast();
@@ -163,8 +164,10 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
       }
     }
     break;
+  }
 
   case QEvent::MouseButtonPress:
+  {
     d->isPressed = true;
     d->movementStarted = false;
     d->pressPosition = pos;
@@ -173,11 +176,13 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
     d->lastRecording = QDateTime::currentDateTime();
     d->mostRecentSpeed = 0.0f;
     return true;
-    break;
+  }
 
   case QEvent::MouseButtonRelease:
+  {
     if(!widget)
       break;
+
     d->isPressed = false;
     if(!d->movementStarted)
     {
@@ -199,7 +204,7 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
       d->setSpeed(d->mostRecentSpeed);
 
     return true;
-    break;
+  }
 
   case QEvent::MouseMove:
   {
@@ -235,7 +240,6 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
     d->lastMovement = pos;
     d->lastRecording = QDateTime::currentDateTime();
     return true;
-    break;
   }
 
   default:
