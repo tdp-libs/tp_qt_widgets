@@ -1,7 +1,7 @@
 #ifndef tdp_qt_widgets_Globals_h
 #define tdp_qt_widgets_Globals_h
 
-#include "tp_utils/Globals.h"
+#include "tdp_qt_utils/Globals.h"
 
 #include <QtCore/qglobal.h>
 
