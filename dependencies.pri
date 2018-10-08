@@ -1,12 +1,5 @@
 QT += core gui widgets
+DEPENDENCIES += tdp_qt_utils
+INCLUDEPATHS += tdp_qt_widgets/inc/
+LIBRARIES    += tdp_qt_widgets
 
-#External libs
-
-#Tdp libs
-include(../tdp_qt_utils/dependencies.pri)
-
-!equals(TARGET, "tdp_qt_widgets"){
-LIBS += -ltdp_qt_widgets
-}
-
-INCLUDEPATH  += $$PWD/../tdp_qt_widgets/inc/
