@@ -6,9 +6,9 @@
 #include <QtCore/qglobal.h>
 
 #if defined(TDP_QT_WIDGETS_LIBRARY)
-#  define TDP_QT_WIDGETS_SHARED_EXPORT Q_DECL_EXPORT
+#  define TDP_QT_WIDGETS_SHARED_EXPORT TP_EXPORT
 #else
-#  define TDP_QT_WIDGETS_SHARED_EXPORT Q_DECL_IMPORT
+#  define TDP_QT_WIDGETS_SHARED_EXPORT TP_IMPORT
 #endif
 
 //##################################################################################################
