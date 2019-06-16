@@ -41,7 +41,7 @@ QImage BusyAnimationGenerator::generateImage(int size)const
   mask.fill(0);
   color.fill(0);
 
-  float center = float(size)/2.0f;
+  const float center = float(size)/2.0f;
 
   {
     float width = d->lineWidth*100.0f;
@@ -82,7 +82,7 @@ QImage BusyAnimationGenerator::generateImage(int size)const
 
     float div = 16;
 
-    int iMax = int(d->maxAngle*360.0f)*div;
+    int iMax = int(d->maxAngle*360.0f*div);
     float factor = 1.0f / float(iMax*iMax*iMax);
     for(int i=0; i<iMax; i++)
     {
@@ -94,11 +94,11 @@ QImage BusyAnimationGenerator::generateImage(int size)const
 
       auto a = float(float(i*i*i)*factor);
 
-      painter.setPen(QColor(r, g, b, a*255.0f));
-      painter.drawLine(center, center, x, y);
+      painter.setPen(QColor(r, g, b, int(a*255.0f)));
+      painter.drawLine(int(center), int(center), int(x), int(y));
     }
 
-    int hMax = iMax + (359*div - iMax)/2;
+    int hMax = iMax + int(359*div - iMax)/2;
     for(int i=iMax; i<hMax; i++)
     {
       float degrees = float(i) / div;
@@ -108,7 +108,7 @@ QImage BusyAnimationGenerator::generateImage(int size)const
       float y = center + (std::cos(radians) * 1200);
 
       painter.setPen(d->color);
-      painter.drawLine(center, center, x, y);
+      painter.drawLine(int(center), int(center), int(x), int(y));
     }
 
   }
@@ -124,7 +124,7 @@ QImage BusyAnimationGenerator::generateImage(int size)const
 
         float alpha = (float(qAlpha(a)) / 255) * float(qAlpha(c));
 
-        resultImage.setPixel(x, y, qRgba(qRed(c), qGreen(c), qBlue(c), alpha));
+        resultImage.setPixel(x, y, qRgba(qRed(c), qGreen(c), qBlue(c), int(alpha)));
       }
     }
   }
@@ -142,9 +142,9 @@ QImage BusyAnimationGenerator::generateImage(int size)const
     for(int i=1; i<d->repeat; i++)
     {
       painter.save();
-      painter.translate(center, center);
-      painter.rotate(repeatAngle * float(i));
-      painter.drawImage(-center, -center, original);
+      painter.translate(int(center), int(center));
+      painter.rotate(int(repeatAngle * float(i)));
+      painter.drawImage(int(-center), int(-center), original);
       painter.restore();
     }
   }
