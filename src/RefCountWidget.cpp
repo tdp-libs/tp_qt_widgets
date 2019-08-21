@@ -69,7 +69,7 @@ void RefCountWidget::timerEvent(QTimerEvent* event)
 #endif
 
   {
-    d->table->setRowCount(d->instances.size());
+    d->table->setRowCount(int(d->instances.size()));
     int row=0;
     for(const auto& i : d->instances)
     {
