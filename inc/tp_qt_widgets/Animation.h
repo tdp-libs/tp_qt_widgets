@@ -48,7 +48,7 @@ struct AnimationKeyFrame
 /*!
 
 */
-class tp_qt_WIDGETS_SHARED_EXPORT Animation
+class TP_QT_WIDGETS_SHARED_EXPORT Animation
 {
 public:
   //################################################################################################

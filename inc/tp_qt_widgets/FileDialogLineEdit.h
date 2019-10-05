@@ -14,7 +14,7 @@ namespace tp_qt_widgets
 /*!
 
 */
-class tp_qt_WIDGETS_SHARED_EXPORT FileDialogLineEdit: public QWidget
+class TP_QT_WIDGETS_SHARED_EXPORT FileDialogLineEdit: public QWidget
 {
   Q_OBJECT
 public:

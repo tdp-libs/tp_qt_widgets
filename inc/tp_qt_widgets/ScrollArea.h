@@ -9,7 +9,7 @@ namespace tp_qt_widgets
 {
 
 //##################################################################################################
-class tp_qt_WIDGETS_SHARED_EXPORT ScrollArea: public QScrollArea
+class TP_QT_WIDGETS_SHARED_EXPORT ScrollArea: public QScrollArea
 {
 public:
   //################################################################################################

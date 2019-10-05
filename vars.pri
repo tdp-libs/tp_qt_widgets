@@ -1,7 +1,7 @@
 TARGET = tp_qt_widgets
 TEMPLATE = lib
 
-DEFINES += tp_qt_WIDGETS_LIBRARY
+DEFINES += TP_QT_WIDGETS_LIBRARY
 
 SOURCES += src/Utils.cpp
 HEADERS += inc/tp_qt_widgets/Utils.h

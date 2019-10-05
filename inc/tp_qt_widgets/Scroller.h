@@ -15,7 +15,7 @@ namespace tp_qt_widgets
 /*!
 This class provides touch and drag scrolling for lists and scroll areas on mobile devices.
 */
-class tp_qt_WIDGETS_SHARED_EXPORT Scroller: QObject
+class TP_QT_WIDGETS_SHARED_EXPORT Scroller: QObject
 {
 public:
   //################################################################################################

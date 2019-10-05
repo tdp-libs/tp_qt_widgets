@@ -13,7 +13,7 @@ namespace tp_qt_widgets
 /*!
 This widget displays the instance counts of all the types that inplement instance counting.
 */
-class tp_qt_WIDGETS_SHARED_EXPORT RefCountWidget: public QWidget
+class TP_QT_WIDGETS_SHARED_EXPORT RefCountWidget: public QWidget
 {
 public:
   //################################################################################################

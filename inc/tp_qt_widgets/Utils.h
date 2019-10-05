@@ -10,10 +10,10 @@ namespace tp_qt_widgets
 
 //##################################################################################################
 //! Set the visibility of the on screen keyboard.
-void tp_qt_WIDGETS_SHARED_EXPORT setKeyboardVisible(bool visible);
+void TP_QT_WIDGETS_SHARED_EXPORT setKeyboardVisible(bool visible);
 
 //##################################################################################################
-QRectF tp_qt_WIDGETS_SHARED_EXPORT centerFit(float maxWidth, float maxHeight, const QRectF& source);
+QRectF TP_QT_WIDGETS_SHARED_EXPORT centerFit(float maxWidth, float maxHeight, const QRectF& source);
 
 }
 

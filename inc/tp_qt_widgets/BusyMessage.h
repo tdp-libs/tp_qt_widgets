@@ -42,7 +42,7 @@ struct BusyMessageConfiguration
 /*!
 
 */
-class tp_qt_WIDGETS_SHARED_EXPORT BusyMessage: public QFrame
+class TP_QT_WIDGETS_SHARED_EXPORT BusyMessage: public QFrame
 {
   Q_OBJECT
 public:

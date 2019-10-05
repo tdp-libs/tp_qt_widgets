@@ -59,7 +59,7 @@ void RefCountWidget::timerEvent(QTimerEvent* event)
     return QWidget::timerEvent(event);
 
 
-#ifdef tp_qt_REF_COUNT
+#ifdef TP_REF_COUNT
   {
     tp_utils::RefCount::lock();
     for(const auto& i : tp_utils::RefCount::instances())

@@ -18,7 +18,7 @@ namespace tp_qt_widgets
 /*!
 This is a progress bar that automatically updates when the tp_qt_utils::Progress class is changed.
 */
-class tp_qt_WIDGETS_SHARED_EXPORT ProgressBar: public QProgressBar
+class TP_QT_WIDGETS_SHARED_EXPORT ProgressBar: public QProgressBar
 {
   Q_OBJECT
 public:

@@ -5,19 +5,19 @@
 
 #include <QObject>
 
-class tp_qt_WIDGETS_SHARED_EXPORT QPropertyAnimation;
+class TP_QT_WIDGETS_SHARED_EXPORT QPropertyAnimation;
 
 namespace tp_qt_widgets
 {
 
 //##################################################################################################
-enum tp_qt_WIDGETS_SHARED_EXPORT ScrollLayoutAnimationType
+enum TP_QT_WIDGETS_SHARED_EXPORT ScrollLayoutAnimationType
 {
   CollapseAnimation
 };
 
 //##################################################################################################
-class tp_qt_WIDGETS_SHARED_EXPORT ScrollLayoutAnimation: public QObject
+class TP_QT_WIDGETS_SHARED_EXPORT ScrollLayoutAnimation: public QObject
 {
   QPropertyAnimation *m_animation;
   Q_OBJECT

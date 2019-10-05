@@ -14,7 +14,7 @@ class Animation;
 /*!
 
 */
-class tp_qt_WIDGETS_SHARED_EXPORT AnimationWidget: public QWidget
+class TP_QT_WIDGETS_SHARED_EXPORT AnimationWidget: public QWidget
 {
   Q_OBJECT
 public:
