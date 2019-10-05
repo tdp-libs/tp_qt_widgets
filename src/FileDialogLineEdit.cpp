@@ -1,10 +1,10 @@
-#include "tdp_qt_widgets/FileDialogLineEdit.h"
+#include "tp_qt_widgets/FileDialogLineEdit.h"
 
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 //##################################################################################################
 struct FileDialogLineEdit::Private

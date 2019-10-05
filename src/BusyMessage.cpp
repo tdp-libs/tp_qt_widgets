@@ -1,8 +1,8 @@
-#include "tdp_qt_widgets/BusyMessage.h"
-#include "tdp_qt_widgets/ProgressBar.h"
-#include "tdp_qt_widgets/AnimationWidget.h"
+#include "tp_qt_widgets/BusyMessage.h"
+#include "tp_qt_widgets/ProgressBar.h"
+#include "tp_qt_widgets/AnimationWidget.h"
 
-#include "tdp_qt_utils/Progress.h"
+#include "tp_qt_utils/Progress.h"
 
 #include "tp_utils/DebugUtils.h"
 
@@ -16,7 +16,7 @@
 
 #include <QDebug>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
@@ -27,7 +27,7 @@ struct BusyMessage::Private: public QThread
   BusyMessage* q;
   BusyMessageConfiguration configuration;
 
-  tdp_qt_utils::Progress progress;
+  tp_qt_utils::Progress progress;
 
   QEventLoop* eventLoop;
 

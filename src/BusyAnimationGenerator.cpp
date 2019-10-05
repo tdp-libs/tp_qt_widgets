@@ -1,11 +1,11 @@
-#include "tdp_qt_widgets/BusyAnimationGenerator.h"
+#include "tp_qt_widgets/BusyAnimationGenerator.h"
 
 #include <QColor>
 #include <QPainter>
 
 #include <cmath>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 //##################################################################################################
 struct BusyAnimationGenerator::Private

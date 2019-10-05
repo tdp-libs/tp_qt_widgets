@@ -1,23 +1,23 @@
-#ifndef tdp_qt_widgets_ScrollLayoutAnimation_h
-#define tdp_qt_widgets_ScrollLayoutAnimation_h
+#ifndef tp_qt_widgets_ScrollLayoutAnimation_h
+#define tp_qt_widgets_ScrollLayoutAnimation_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
 #include <QObject>
 
-class TDP_QT_WIDGETS_SHARED_EXPORT QPropertyAnimation;
+class tp_qt_WIDGETS_SHARED_EXPORT QPropertyAnimation;
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
-enum TDP_QT_WIDGETS_SHARED_EXPORT ScrollLayoutAnimationType
+enum tp_qt_WIDGETS_SHARED_EXPORT ScrollLayoutAnimationType
 {
   CollapseAnimation
 };
 
 //##################################################################################################
-class TDP_QT_WIDGETS_SHARED_EXPORT ScrollLayoutAnimation: public QObject
+class tp_qt_WIDGETS_SHARED_EXPORT ScrollLayoutAnimation: public QObject
 {
   QPropertyAnimation *m_animation;
   Q_OBJECT

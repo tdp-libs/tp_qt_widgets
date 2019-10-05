@@ -1,20 +1,20 @@
-#ifndef tdp_qt_widgets_BusyMessage_h
-#define tdp_qt_widgets_BusyMessage_h
+#ifndef tp_qt_widgets_BusyMessage_h
+#define tp_qt_widgets_BusyMessage_h
 
-#include "tdp_qt_widgets/Globals.h"
-#include "tdp_qt_widgets/Animation.h"
+#include "tp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Animation.h"
 
 #include <QFrame>
 
-namespace tdp_qt_utils
+namespace tp_qt_utils
 {
 class Progress;
 }
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 //################################################################################################
-typedef void (*TaskCallback)(tdp_qt_utils::Progress* progress, void* opaque);
+typedef void (*TaskCallback)(tp_qt_utils::Progress* progress, void* opaque);
 
 //##################################################################################################
 struct BusyMessageConfiguration
@@ -42,7 +42,7 @@ struct BusyMessageConfiguration
 /*!
 
 */
-class TDP_QT_WIDGETS_SHARED_EXPORT BusyMessage: public QFrame
+class tp_qt_WIDGETS_SHARED_EXPORT BusyMessage: public QFrame
 {
   Q_OBJECT
 public:

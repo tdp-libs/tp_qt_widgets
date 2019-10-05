@@ -1,16 +1,16 @@
-#ifndef tdp_qt_widgets_ScrollLayout_h
-#define tdp_qt_widgets_ScrollLayout_h
+#ifndef tp_qt_widgets_ScrollLayout_h
+#define tp_qt_widgets_ScrollLayout_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
 #include <QLayout>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 
 //##################################################################################################
-class TDP_QT_WIDGETS_SHARED_EXPORT ScrollLayout: public QLayout
+class tp_qt_WIDGETS_SHARED_EXPORT ScrollLayout: public QLayout
 {
   QList<QLayoutItem*> items;
   QRect m_geometry;

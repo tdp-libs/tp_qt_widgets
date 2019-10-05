@@ -1,5 +1,5 @@
 QT += gui widgets
-DEPENDENCIES += tdp_qt_utils
-INCLUDEPATHS += tdp_qt_widgets/inc/
-LIBRARIES    += tdp_qt_widgets
+DEPENDENCIES += tp_qt_utils
+INCLUDEPATHS += tp_qt_widgets/inc/
+LIBRARIES    += tp_qt_widgets
 

@@ -1,13 +1,13 @@
-#ifndef tdp_qt_widgets_Scroller_h
-#define tdp_qt_widgets_Scroller_h
+#ifndef tp_qt_widgets_Scroller_h
+#define tp_qt_widgets_Scroller_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
 #include <QObject>
 
 class QAbstractScrollArea;
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
@@ -15,7 +15,7 @@ namespace tdp_qt_widgets
 /*!
 This class provides touch and drag scrolling for lists and scroll areas on mobile devices.
 */
-class TDP_QT_WIDGETS_SHARED_EXPORT Scroller: QObject
+class tp_qt_WIDGETS_SHARED_EXPORT Scroller: QObject
 {
 public:
   //################################################################################################

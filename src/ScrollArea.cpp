@@ -1,4 +1,4 @@
-#include "tdp_qt_widgets/ScrollArea.h"
+#include "tp_qt_widgets/ScrollArea.h"
 
 #include <QLayout>
 #include <QEvent>
@@ -7,7 +7,7 @@
 #include <QLinearGradient>
 #include <QScrollBar>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 class ScrollArea::Private: public QWidget
 {

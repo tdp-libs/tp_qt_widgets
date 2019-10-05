@@ -1,4 +1,4 @@
-#include "tdp_qt_widgets/RefCountWidget.h"
+#include "tp_qt_widgets/RefCountWidget.h"
 #include "tp_utils/RefCount.h"
 
 #include <QTableWidget>
@@ -7,7 +7,7 @@
 #include <QBoxLayout>
 #include <QHeaderView>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
@@ -59,7 +59,7 @@ void RefCountWidget::timerEvent(QTimerEvent* event)
     return QWidget::timerEvent(event);
 
 
-#ifdef TDP_REF_COUNT
+#ifdef tp_qt_REF_COUNT
   {
     tp_utils::RefCount::lock();
     for(const auto& i : tp_utils::RefCount::instances())

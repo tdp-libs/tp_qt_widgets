@@ -1,15 +1,15 @@
-#ifndef tdp_qt_widgets_ScrollArea_h
-#define tdp_qt_widgets_ScrollArea_h
+#ifndef tp_qt_widgets_ScrollArea_h
+#define tp_qt_widgets_ScrollArea_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
 #include <QScrollArea>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
-class TDP_QT_WIDGETS_SHARED_EXPORT ScrollArea: public QScrollArea
+class tp_qt_WIDGETS_SHARED_EXPORT ScrollArea: public QScrollArea
 {
 public:
   //################################################################################################

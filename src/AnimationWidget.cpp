@@ -1,12 +1,12 @@
-#include "tdp_qt_widgets/AnimationWidget.h"
-#include "tdp_qt_widgets/Animation.h"
+#include "tp_qt_widgets/AnimationWidget.h"
+#include "tp_qt_widgets/Animation.h"
 
 #include <QTimerEvent>
 #include <QPainter>
 
 #include <QDebug>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 //##################################################################################################
 struct AnimationWidget::Private

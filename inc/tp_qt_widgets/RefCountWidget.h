@@ -1,11 +1,11 @@
-#ifndef tdp_qt_widgets_RefCountWidget_h
-#define tdp_qt_widgets_RefCountWidget_h
+#ifndef tp_qt_widgets_RefCountWidget_h
+#define tp_qt_widgets_RefCountWidget_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
 #include <QWidget>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
@@ -13,7 +13,7 @@ namespace tdp_qt_widgets
 /*!
 This widget displays the instance counts of all the types that inplement instance counting.
 */
-class TDP_QT_WIDGETS_SHARED_EXPORT RefCountWidget: public QWidget
+class tp_qt_WIDGETS_SHARED_EXPORT RefCountWidget: public QWidget
 {
 public:
   //################################################################################################

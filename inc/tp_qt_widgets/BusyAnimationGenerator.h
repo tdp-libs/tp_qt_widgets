@@ -1,12 +1,11 @@
-#ifndef tdp_qt_widgets_FileDialogLineEdit_h
-#define tdp_qt_widgets_FileDialogLineEdit_h
+#ifndef tp_qt_widgets_BusyAnimationGenerator_h
+#define tp_qt_widgets_BusyAnimationGenerator_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
-#include <QWidget>
-#include <QFileDialog>
+#include <QImage>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
@@ -14,41 +13,34 @@ namespace tdp_qt_widgets
 /*!
 
 */
-class TDP_QT_WIDGETS_SHARED_EXPORT FileDialogLineEdit: public QWidget
+class tp_qt_WIDGETS_SHARED_EXPORT BusyAnimationGenerator
 {
-  Q_OBJECT
 public:
   //################################################################################################
-  FileDialogLineEdit(QWidget* parent = nullptr);
+  BusyAnimationGenerator();
 
   //################################################################################################
-  virtual ~FileDialogLineEdit();
+  virtual ~BusyAnimationGenerator();
 
   //################################################################################################
-  void setText(const QString& text);
+  QImage generateImage(int size)const;
 
   //################################################################################################
-  QString text()const;
+  void setColor(const QColor& color);
 
   //################################################################################################
-  void setInitialDirectory(const QString& dir);
-
-  enum Mode
-  {
-    DirectoryMode,
-    OpenFileMode,
-    SaveFileMode
-  };
+  //0 -> 1
+  void setMaxAngle(float maxAngle);
 
   //################################################################################################
-  void setMode(Mode mode);
+  //0 -> 1
+  void setLineWidth(float lineWidth);
 
   //################################################################################################
-  void setFilter(const QString& filter);
+  void setClockwise(bool clockwise);
 
-signals:
   //################################################################################################
-  void selectionChanged();
+  void setRepeat(int repeat);
 
 private:
   struct Private;

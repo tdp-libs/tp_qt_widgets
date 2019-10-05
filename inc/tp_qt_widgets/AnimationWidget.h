@@ -1,11 +1,11 @@
-#ifndef tdp_qt_widgets_AnimationWidget_h
-#define tdp_qt_widgets_AnimationWidget_h
+#ifndef tp_qt_widgets_AnimationWidget_h
+#define tp_qt_widgets_AnimationWidget_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
 #include <QWidget>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 class Animation;
 
@@ -14,7 +14,7 @@ class Animation;
 /*!
 
 */
-class TDP_QT_WIDGETS_SHARED_EXPORT AnimationWidget: public QWidget
+class tp_qt_WIDGETS_SHARED_EXPORT AnimationWidget: public QWidget
 {
   Q_OBJECT
 public:

@@ -1,10 +1,10 @@
-#include "tdp_qt_widgets/FontUtils.h"
+#include "tp_qt_widgets/FontUtils.h"
 
 #include <QFont>
 #include <QFontMetricsF>
 #include <QStringList>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################

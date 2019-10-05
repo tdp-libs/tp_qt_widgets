@@ -1,10 +1,10 @@
-#include "tdp_qt_widgets/ScrollLayoutAnimation.h"
-#include "tdp_qt_widgets/ScrollLayout.h"
+#include "tp_qt_widgets/ScrollLayoutAnimation.h"
+#include "tp_qt_widgets/ScrollLayout.h"
 
 #include <QPropertyAnimation>
 #include <QEasingCurve>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 //##################################################################################################
 ScrollLayoutAnimation::ScrollLayoutAnimation(QObject* layout):

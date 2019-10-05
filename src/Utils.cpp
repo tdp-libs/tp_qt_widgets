@@ -1,4 +1,4 @@
-#include "tdp_qt_widgets/Utils.h"
+#include "tp_qt_widgets/Utils.h"
 
 #include <QFontMetricsF>
 
@@ -7,7 +7,7 @@
 #include <QApplication>
 #endif
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################

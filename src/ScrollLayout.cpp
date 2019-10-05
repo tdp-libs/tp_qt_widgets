@@ -1,6 +1,6 @@
-#include "tdp_qt_widgets/ScrollLayout.h"
+#include "tp_qt_widgets/ScrollLayout.h"
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 //##################################################################################################
 ScrollLayout::ScrollLayout(QWidget* parent):

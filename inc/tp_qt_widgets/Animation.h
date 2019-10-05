@@ -1,13 +1,13 @@
-#ifndef tdp_qt_widgets_Animation_h
-#define tdp_qt_widgets_Animation_h
+#ifndef tp_qt_widgets_Animation_h
+#define tp_qt_widgets_Animation_h
 
-#include "tdp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h"
 
 #include <QImage>
 #include <QPixmap>
 #include <QPoint>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
@@ -48,7 +48,7 @@ struct AnimationKeyFrame
 /*!
 
 */
-class TDP_QT_WIDGETS_SHARED_EXPORT Animation
+class tp_qt_WIDGETS_SHARED_EXPORT Animation
 {
 public:
   //################################################################################################

@@ -1,9 +1,9 @@
-#include "tdp_qt_widgets/PainterUtils.h"
+#include "tp_qt_widgets/PainterUtils.h"
 
 #include <QFont>
 #include <QStringList>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################

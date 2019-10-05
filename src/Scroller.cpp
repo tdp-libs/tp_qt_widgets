@@ -1,4 +1,4 @@
-#include "tdp_qt_widgets/Scroller.h"
+#include "tp_qt_widgets/Scroller.h"
 
 #include <QAbstractScrollArea>
 #include <QEvent>
@@ -14,7 +14,7 @@
 
 #define REFRESH_RATE 15
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 namespace
 {

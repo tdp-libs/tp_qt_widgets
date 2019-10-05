@@ -1,15 +1,15 @@
-#include "tdp_qt_widgets/ProgressBar.h"
-#include "tdp_qt_utils/Progress.h"
+#include "tp_qt_widgets/ProgressBar.h"
+#include "tp_qt_utils/Progress.h"
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 
 //##################################################################################################
 struct ProgressBar::Private
 {
-  tdp_qt_utils::Progress* progress;
+  tp_qt_utils::Progress* progress;
 
-  Private(tdp_qt_utils::Progress* progress_):
+  Private(tp_qt_utils::Progress* progress_):
     progress(progress_)
   {
 
@@ -17,7 +17,7 @@ struct ProgressBar::Private
 };
 
 //##################################################################################################
-ProgressBar::ProgressBar(tdp_qt_utils::Progress* progress, QWidget* parent):
+ProgressBar::ProgressBar(tp_qt_utils::Progress* progress, QWidget* parent):
   QProgressBar(parent),
   d(new Private(progress))
 {

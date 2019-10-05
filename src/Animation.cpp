@@ -1,4 +1,4 @@
-#include "tdp_qt_widgets/Animation.h"
+#include "tp_qt_widgets/Animation.h"
 
 #include <QList>
 #include <QPainter>
@@ -6,7 +6,7 @@
 
 #include <cmath>
 
-namespace tdp_qt_widgets
+namespace tp_qt_widgets
 {
 namespace
 {
