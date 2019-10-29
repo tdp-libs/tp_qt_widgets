@@ -127,6 +127,8 @@ BusyMessage::BusyMessage(const BusyMessageConfiguration& configuration, QWidget*
   QFrame(parent),
   d(new Private(this, configuration))
 {
+  TP_QT_ADD_TOOL_TIP();
+
   d->start();
 
   auto layout = new QVBoxLayout(this);

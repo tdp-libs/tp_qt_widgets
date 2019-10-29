@@ -30,6 +30,7 @@ void ScrollLayout::addItem(QLayoutItem* item)
   update();
 }
 
+//##################################################################################################
 void ScrollLayout::addLayout(QLayout* layout)
 {
   if (!adoptLayout(layout))

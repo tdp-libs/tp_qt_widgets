@@ -45,7 +45,7 @@ AnimationWidget::AnimationWidget(QWidget* parent):
   QWidget(parent),
   d(new Private(this))
 {
-
+  TP_QT_ADD_TOOL_TIP();
 }
 
 //##################################################################################################

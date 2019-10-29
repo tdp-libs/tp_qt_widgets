@@ -21,6 +21,8 @@ ProgressBar::ProgressBar(tp_qt_utils::Progress* progress, QWidget* parent):
   QProgressBar(parent),
   d(new Private(progress))
 {
+  TP_QT_ADD_TOOL_TIP();
+
   setRange(0, 1000);
   connect(d->progress, SIGNAL(changed()), this, SLOT(progressChanged()));
 }

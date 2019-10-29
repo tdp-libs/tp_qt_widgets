@@ -35,6 +35,8 @@ RefCountWidget::RefCountWidget(QWidget* parent):
   QWidget(parent),
   d(new Private(this))
 {
+  TP_QT_ADD_TOOL_TIP();
+
   d->timerID = startTimer(1000);
 
   new QVBoxLayout(this);
