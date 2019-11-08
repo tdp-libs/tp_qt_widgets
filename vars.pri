@@ -45,5 +45,11 @@ HEADERS += inc/tp_qt_widgets/ScrollArea.h
 SOURCES += src/FileDialogLineEdit.cpp
 HEADERS += inc/tp_qt_widgets/FileDialogLineEdit.h
 
+SOURCES += src/ColorPickerWidget.cpp
+HEADERS += inc/tp_qt_widgets/ColorPickerWidget.h
+
+SOURCES += src/ColorPickerDialog.cpp
+HEADERS += inc/tp_qt_widgets/ColorPickerDialog.h
+
 HEADERS += inc/tp_qt_widgets/Globals.h
 
