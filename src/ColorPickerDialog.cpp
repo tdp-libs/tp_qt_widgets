@@ -27,6 +27,9 @@ ColorPickerDialog::ColorPickerDialog(QDialog* parent):
 
   auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
   l->addWidget(buttonBox);
+
+  connect(buttonBox, &QDialogButtonBox::accepted, this, &ColorPickerDialog::accept);
+  connect(buttonBox, &QDialogButtonBox::rejected, this, &ColorPickerDialog::reject);
 }
 
 //##################################################################################################
@@ -57,7 +60,7 @@ QColor ColorPickerDialog::getColor(const QColor& color, const QString& title, QD
   dialog->setColor(color);
   auto result = dialog->exec();
 
-  if(!dialog || result != QDialogButtonBox::Ok)
+  if(!dialog || result != QDialog::Accepted)
     return QColor();
 
   return dialog->color();
