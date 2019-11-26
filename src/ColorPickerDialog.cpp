@@ -11,6 +11,10 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct ColorPickerDialog::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::ColorPickerDialog::Private");
+  TP_NONCOPYABLE(Private);
+  Private() = default;
+
   ColorPickerWidget* colorPickerWidget{nullptr};
 };
 

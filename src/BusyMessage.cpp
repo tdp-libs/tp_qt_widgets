@@ -22,7 +22,9 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct BusyMessage::Private: public QThread
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::BusyMessage::Private");
   TP_NONCOPYABLE(Private);
+
   friend class BusyMessage;
   BusyMessage* q;
   BusyMessageConfiguration configuration;

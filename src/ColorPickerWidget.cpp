@@ -10,6 +10,9 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct ColorPickerWidget::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::ColorPickerWidget::Private");
+  TP_NONCOPYABLE(Private);
+
   ColorPickerWidget* q;
 
   QColor color{128, 255, 128};

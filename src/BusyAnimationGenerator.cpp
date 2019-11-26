@@ -10,6 +10,10 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct BusyAnimationGenerator::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::BusyAnimationGenerator::Private");
+  TP_NONCOPYABLE(Private);
+  Private() = default;
+
   QColor color{Qt::blue};
   float maxAngle{0.5f};
   float lineWidth{0.2f};

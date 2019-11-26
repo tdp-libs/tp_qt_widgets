@@ -37,6 +37,9 @@ struct EventDetails_lt
 //##################################################################################################
 struct Scroller::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::Scroller::Private");
+  TP_NONCOPYABLE(Private);
+
   Scroller* q;
   QAbstractScrollArea* scrollArea;
 

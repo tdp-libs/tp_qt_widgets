@@ -13,11 +13,12 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct RefCountWidget::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::RefCountWidget::Private");
+  TP_NONCOPYABLE(Private);
+
   RefCountWidget* q;
 
   int timerID;
-
-  std::unordered_map<std::string, tp_utils::InstanceDetails> instances;
 
   QTableWidget* table;
 
@@ -37,7 +38,9 @@ RefCountWidget::RefCountWidget(QWidget* parent):
 {
   TP_QT_ADD_TOOL_TIP();
 
+#ifdef TP_REF_COUNT
   d->timerID = startTimer(1000);
+#endif
 
   new QVBoxLayout(this);
   layout()->setContentsMargins(0, 0, 0, 0);
@@ -58,22 +61,21 @@ RefCountWidget::~RefCountWidget()
 void RefCountWidget::timerEvent(QTimerEvent* event)
 {
   if(event->timerId() != d->timerID)
-    return QWidget::timerEvent(event);
-
+    return QWidget::timerEvent(event);  
 
 #ifdef TP_REF_COUNT
+  std::unordered_map<std::string, tp_utils::InstanceDetails> instances;
   {
     tp_utils::RefCount::lock();
     for(const auto& i : tp_utils::RefCount::instances())
-      d->instances[i.first.keyString()] = i.second;
+      instances[i.first.keyString()] = i.second;
     tp_utils::RefCount::unlock();
   }
-#endif
 
   {
-    d->table->setRowCount(int(d->instances.size()));
+    d->table->setRowCount(int(instances.size()));
     int row=0;
-    for(const auto& i : d->instances)
+    for(const auto& i : instances)
     {
       d->table->setItem(row, 0, new QTableWidgetItem(QString::fromStdString(i.first)));
       d->table->setItem(row, 1, new QTableWidgetItem(QString::number(i.second.count)));
@@ -83,6 +85,7 @@ void RefCountWidget::timerEvent(QTimerEvent* event)
   }
 
   d->table->resizeColumnsToContents();
+#endif
 }
 
 }

@@ -11,6 +11,9 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct AnimationWidget::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::AnimationWidget::Private");
+  TP_NONCOPYABLE(Private);
+
   AnimationWidget* q;
 
   Animation animation;

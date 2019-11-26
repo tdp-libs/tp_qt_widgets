@@ -9,6 +9,9 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct FileDialogLineEdit::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::FileDialogLineEdit::Private");
+  TP_NONCOPYABLE(Private);
+
   FileDialogLineEdit* q;
 
   QLineEdit* lineEdit{nullptr};

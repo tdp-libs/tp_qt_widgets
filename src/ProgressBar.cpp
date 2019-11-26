@@ -7,6 +7,9 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct ProgressBar::Private
 {
+  TP_REF_COUNT_OBJECTS("tp_qt_widgets::ProgressBar::Private");
+  TP_NONCOPYABLE(Private);
+
   tp_qt_utils::Progress* progress;
 
   Private(tp_qt_utils::Progress* progress_):
