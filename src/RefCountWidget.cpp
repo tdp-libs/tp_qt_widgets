@@ -5,7 +5,8 @@
 #include <QTimerEvent>
 #include <QMap>
 #include <QBoxLayout>
-#include <QHeaderView>
+#include <QTimerEvent>
+#include <QPlainTextEdit>
 
 namespace tp_qt_widgets
 {
@@ -38,17 +39,21 @@ RefCountWidget::RefCountWidget(QWidget* parent):
 {
   TP_QT_ADD_TOOL_TIP();
 
-#ifdef TP_REF_COUNT
-  d->timerID = startTimer(1000);
-#endif
-
   new QVBoxLayout(this);
   layout()->setContentsMargins(0, 0, 0, 0);
 
+#ifdef TP_REF_COUNT
+  d->timerID = startTimer(1000);
   d->table = new QTableWidget;
   d->table->setColumnCount(3);
   d->table->setHorizontalHeaderLabels(QStringList{"Type", "#", "##"});
   layout()->addWidget(d->table);
+#else
+  auto message = new QPlainTextEdit();
+  message->setReadOnly(true);
+  message->setPlainText("Define TP_REF_COUNT in project.inc and rebuild for this display to work.");
+  layout()->addWidget(message);
+#endif
 }
 
 //##################################################################################################
