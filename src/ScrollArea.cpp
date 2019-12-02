@@ -91,8 +91,8 @@ ScrollArea::ScrollArea(QWidget* parent):
 {
   TP_QT_ADD_TOOL_TIP();
 
-  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  //setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+  //setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
   setFrameShape(QFrame::NoFrame);
   d->calculate();
 }
