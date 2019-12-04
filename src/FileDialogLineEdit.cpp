@@ -48,8 +48,6 @@ FileDialogLineEdit::FileDialogLineEdit(QWidget* parent):
   QWidget(parent),
   d(new Private(this))
 {
-  TP_QT_ADD_TOOL_TIP();
-
   auto layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 

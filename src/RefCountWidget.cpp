@@ -37,8 +37,6 @@ RefCountWidget::RefCountWidget(QWidget* parent):
   QWidget(parent),
   d(new Private(this))
 {
-  TP_QT_ADD_TOOL_TIP();
-
   new QVBoxLayout(this);
   layout()->setContentsMargins(0, 0, 0, 0);
 

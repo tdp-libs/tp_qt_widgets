@@ -16,6 +16,21 @@
 /*!
 This module provides a set of widgets for displaying the data types defined in tp_qt_utils.
 */
-namespace tp_qt_widgets{}
+namespace tp_qt_widgets
+{
+
+#ifdef TP_ADD_WIDGET_NAME_TOOL_TIPS
+class ClassNameToolTips : public QObject
+{
+ Q_OBJECT
+public:
+  ClassNameToolTips(QObject* parent);
+
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+};
+#endif
+
+}
 
 #endif

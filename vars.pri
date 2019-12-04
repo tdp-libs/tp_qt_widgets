@@ -51,5 +51,6 @@ HEADERS += inc/tp_qt_widgets/ColorPickerWidget.h
 SOURCES += src/ColorPickerDialog.cpp
 HEADERS += inc/tp_qt_widgets/ColorPickerDialog.h
 
+SOURCES += src/Globals.cpp
 HEADERS += inc/tp_qt_widgets/Globals.h
 
