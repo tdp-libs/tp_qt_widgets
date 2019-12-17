@@ -30,6 +30,9 @@ bool ClassNameToolTips::eventFilter(QObject *obj, QEvent *event)
   return QObject::eventFilter(obj, event);
 }
 
+#else
+extern int tp_qt_widgetsGlobals;
+int tp_qt_widgetsGlobals{0};
 #endif
 
 }
