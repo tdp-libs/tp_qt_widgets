@@ -11,6 +11,8 @@
 #  define TP_QT_WIDGETS_SHARED_EXPORT TP_IMPORT
 #endif
 
+class QListView;
+
 //##################################################################################################
 //! Widgets for displaying data types defined in tp_qt_utils
 /*!
@@ -18,6 +20,9 @@ This module provides a set of widgets for displaying the data types defined in t
 */
 namespace tp_qt_widgets
 {
+
+//##################################################################################################
+void stayAtBottom(QListView* listView);
 
 #ifdef TP_ADD_WIDGET_NAME_TOOL_TIPS
 class ClassNameToolTips : public QObject
