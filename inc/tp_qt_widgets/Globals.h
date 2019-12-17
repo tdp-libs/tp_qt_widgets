@@ -5,6 +5,8 @@
 
 #include <QtCore/qglobal.h>
 
+#include <functional>
+
 #if defined(TP_QT_WIDGETS_LIBRARY)
 #  define TP_QT_WIDGETS_SHARED_EXPORT TP_EXPORT
 #else
@@ -12,6 +14,7 @@
 #endif
 
 class QListView;
+class QTextEdit;
 
 //##################################################################################################
 //! Widgets for displaying data types defined in tp_qt_utils
@@ -23,6 +26,9 @@ namespace tp_qt_widgets
 
 //##################################################################################################
 void stayAtBottom(QListView* listView);
+
+//##################################################################################################
+std::function<void()> keepTextSelection(QTextEdit* textEdit);
 
 #ifdef TP_ADD_WIDGET_NAME_TOOL_TIPS
 class ClassNameToolTips : public QObject
