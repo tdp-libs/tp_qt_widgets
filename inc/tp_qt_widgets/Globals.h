@@ -33,7 +33,6 @@ std::function<void()> keepTextSelection(QTextEdit* textEdit);
 #ifdef TP_ADD_WIDGET_NAME_TOOL_TIPS
 class ClassNameToolTips : public QObject
 {
- Q_OBJECT
 public:
   ClassNameToolTips(QObject* parent);
 

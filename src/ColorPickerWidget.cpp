@@ -39,9 +39,18 @@ struct ColorPickerWidget::Private
   //################################################################################################
   void updateUI()
   {
+    rSlider->blockSignals(true);
+    gSlider->blockSignals(true);
+    bSlider->blockSignals(true);
+
     rSlider->setValue(color.red  ());
     gSlider->setValue(color.green());
     bSlider->setValue(color.blue ());
+
+    rSlider->blockSignals(false);
+    gSlider->blockSignals(false);
+    bSlider->blockSignals(false);
+
     updatePreview();
   }
 
@@ -80,6 +89,14 @@ ColorPickerWidget::ColorPickerWidget(QWidget* parent):
     connect(d->rSlider, &QSlider::sliderMoved, [&]{d->updateColor();});
     connect(d->gSlider, &QSlider::sliderMoved, [&]{d->updateColor();});
     connect(d->bSlider, &QSlider::sliderMoved, [&]{d->updateColor();});
+
+    connect(d->rSlider, &QSlider::sliderReleased, [&]{d->updateColor();});
+    connect(d->gSlider, &QSlider::sliderReleased, [&]{d->updateColor();});
+    connect(d->bSlider, &QSlider::sliderReleased, [&]{d->updateColor();});
+
+    connect(d->rSlider, &QSlider::valueChanged, [&]{d->updateColor();});
+    connect(d->gSlider, &QSlider::valueChanged, [&]{d->updateColor();});
+    connect(d->bSlider, &QSlider::valueChanged, [&]{d->updateColor();});
 
     hLayout->addLayout(sliderLayout);
   }
