@@ -11,6 +11,7 @@ namespace tp_qt_widgets
 //##################################################################################################
 class TP_QT_WIDGETS_SHARED_EXPORT ScrollArea: public QScrollArea
 {
+  Q_OBJECT
 public:
   //################################################################################################
   ScrollArea(QWidget* parent=nullptr);
