@@ -13,7 +13,7 @@ namespace tp_qt_widgets
 {
 
 //##################################################################################################
-void stayAtBottom(QListView* listView)
+void stayAtBottom(QAbstractItemView* listView)
 {
   std::shared_ptr<bool> atBottom{new bool};
   QObject::connect(listView->model(), &QAbstractItemModel::rowsAboutToBeInserted, listView, [=]

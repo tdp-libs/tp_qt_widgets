@@ -13,7 +13,7 @@
 #  define TP_QT_WIDGETS_SHARED_EXPORT TP_IMPORT
 #endif
 
-class QListView;
+class QAbstractItemView;
 class QTextEdit;
 
 //##################################################################################################
@@ -25,7 +25,7 @@ namespace tp_qt_widgets
 {
 
 //##################################################################################################
-void stayAtBottom(QListView* listView);
+void stayAtBottom(QAbstractItemView* listView);
 
 //##################################################################################################
 std::function<void()> keepTextSelection(QTextEdit* textEdit);
