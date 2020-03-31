@@ -12,9 +12,11 @@
 
 void tp_qt_widgets_staticInitImpl()
 {
-#if TP_LINUX
+#ifdef TP_LINUX
+#ifdef TP_QT_STATIC
   Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
   Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
+#endif
 #endif
 }
 
