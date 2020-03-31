@@ -5,12 +5,28 @@
 #include <QListView>
 #include <QAbstractItemModel>
 #include <QScrollBar>
+#include <QtPlugin>
 #include <QTextEdit>
 
 #include <memory>
 
+void tp_qt_widgets_staticInitImpl()
+{
+#if TP_LINUX
+  Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
+  Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
+#endif
+}
+
 namespace tp_qt_widgets
 {
+
+//##################################################################################################
+int staticInit()
+{
+  tp_qt_widgets_staticInitImpl();
+  return 0;
+}
 
 //##################################################################################################
 void stayAtBottom(QAbstractItemView* listView)
