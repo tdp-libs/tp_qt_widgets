@@ -12,11 +12,17 @@
 
 void tp_qt_widgets_staticInitImpl()
 {
-#ifdef TP_LINUX
 #ifdef TP_QT_STATIC
+
+#ifdef TP_LINUX
   Q_IMPORT_PLUGIN(QXcbIntegrationPlugin)
   Q_IMPORT_PLUGIN(QXcbGlxIntegrationPlugin)
 #endif
+
+#ifdef TP_WIN32
+  Q_IMPORT_PLUGIN(QWindowsIntegrationPlugin)
+#endif
+
 #endif
 }
 
