@@ -17,14 +17,12 @@ class TP_QT_WIDGETS_SHARED_EXPORT ScrollLayout: public QLayout
   int m_animationSpacing;
   Qt::Alignment alignment;
 Q_OBJECT
-
-  Q_PROPERTY(int animationSpacing READ animationSpacing WRITE setAnimationSpacing)
 public:
   //################################################################################################
   ScrollLayout(QWidget* parent=nullptr);
 
   //################################################################################################
-  ~ScrollLayout();
+  ~ScrollLayout() final;
 
   //################################################################################################
   virtual void addItem(QLayoutItem* item);

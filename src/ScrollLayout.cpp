@@ -14,12 +14,12 @@ ScrollLayout::ScrollLayout(QWidget* parent):
 //##################################################################################################
 ScrollLayout::~ScrollLayout()
 {
-  QLayoutItem *child = takeAt(0);
-  while(child)
-  {
-    delete child;
-    child = takeAt(0);
-  }
+//  QLayoutItem *child = takeAt(0);
+//  while(child)
+//  {
+//    delete child;
+//    child = takeAt(0);
+//  }
 }
 
 //##################################################################################################
