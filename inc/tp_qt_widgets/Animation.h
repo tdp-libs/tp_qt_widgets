@@ -69,30 +69,30 @@ public:
   /*!
   This returns the original size of the animation it does nnot take scale into account.
   */
-  int width()const;
+  int width() const;
 
   //################################################################################################
   //! Returns the height of the animation
   /*!
   This returns the original size of the animation it does nnot take scale into account.
   */
-  int height()const;
+  int height() const;
 
   //################################################################################################
   //! Add a frame to the animation
   void addKeyFrame(const AnimationKeyFrame& frame);
 
   //################################################################################################
-  QImage frameImage(int frame)const;
+  QImage frameImage(int frame) const;
 
   //################################################################################################
-  QPixmap framePixmap(int frame)const;
+  QPixmap framePixmap(int frame) const;
 
   //################################################################################################
-  int frameCount()const;
+  int frameCount() const;
 
   //################################################################################################
-  bool isValid()const;
+  bool isValid() const;
 
   //################################################################################################
   //! This can be used to compensate for device scale

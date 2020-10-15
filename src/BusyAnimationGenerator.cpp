@@ -35,7 +35,7 @@ BusyAnimationGenerator::~BusyAnimationGenerator()
 }
 
 //##################################################################################################
-QImage BusyAnimationGenerator::generateImage(int size)const
+QImage BusyAnimationGenerator::generateImage(int size) const
 {
   QImage resultImage(size, size, QImage::Format_ARGB32);
   QImage mask = QImage(600, 600, QImage::Format_ARGB32);

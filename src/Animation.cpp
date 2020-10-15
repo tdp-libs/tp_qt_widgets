@@ -151,13 +151,13 @@ Animation::~Animation()
 }
 
 //##################################################################################################
-int Animation::width()const
+int Animation::width() const
 {
   return d->width;
 }
 
 //##################################################################################################
-int Animation::height()const
+int Animation::height() const
 {
   return d->height;
 }
@@ -170,7 +170,7 @@ void Animation::addKeyFrame(const AnimationKeyFrame& frame)
 }
 
 //##################################################################################################
-QImage Animation::frameImage(int frame)const
+QImage Animation::frameImage(int frame) const
 {
   d->generateFrames();
 
@@ -181,7 +181,7 @@ QImage Animation::frameImage(int frame)const
 }
 
 //##################################################################################################
-QPixmap Animation::framePixmap(int frame)const
+QPixmap Animation::framePixmap(int frame) const
 {
   d->generateFrames();
 
@@ -192,14 +192,14 @@ QPixmap Animation::framePixmap(int frame)const
 }
 
 //##################################################################################################
-int Animation::frameCount()const
+int Animation::frameCount() const
 {
   d->generateFrames();
   return d->frames.size();
 }
 
 //##################################################################################################
-bool Animation::isValid()const
+bool Animation::isValid() const
 {
   return !d->keyFrames.isEmpty();
 }

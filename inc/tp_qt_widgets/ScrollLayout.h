@@ -31,31 +31,31 @@ public:
   virtual void addLayout(QLayout* layout);
 
   //################################################################################################
-  virtual QLayoutItem* itemAt(int index)const;
+  virtual QLayoutItem* itemAt(int index) const;
 
   //################################################################################################
   virtual QLayoutItem* takeAt(int index);
 
   //################################################################################################
-  virtual int count()const;
+  virtual int count() const;
 
   //################################################################################################
-  virtual QSize sizeHint()const;
+  virtual QSize sizeHint() const;
 
   //################################################################################################
-  virtual bool hasHeightForWidth()const;
+  virtual bool hasHeightForWidth() const;
 
   //################################################################################################
-  virtual int heightForWidth(int width)const;
+  virtual int heightForWidth(int width) const;
 
   //################################################################################################
   virtual void setGeometry(const QRect& r);
 
   //################################################################################################
-  virtual QRect geometry()const;
+  virtual QRect geometry() const;
 
   //################################################################################################
-  int animationSpacing()const;
+  int animationSpacing() const;
 
   //################################################################################################
   void setAnimationSpacing(int animationSpacing);

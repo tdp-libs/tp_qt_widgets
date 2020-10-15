@@ -35,7 +35,7 @@ public:
   void setFPS(int fps);
 
   //################################################################################################
-  virtual QSize	sizeHint()const;
+  virtual QSize	sizeHint() const;
 
 protected:
   virtual void timerEvent(QTimerEvent* event);

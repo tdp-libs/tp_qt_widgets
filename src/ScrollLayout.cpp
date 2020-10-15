@@ -40,7 +40,7 @@ void ScrollLayout::addLayout(QLayout* layout)
 }
 
 //##################################################################################################
-QLayoutItem* ScrollLayout::itemAt(int index)const
+QLayoutItem* ScrollLayout::itemAt(int index) const
 {
   return (index>=0 && index<items.size())?items.at(index):nullptr;
 }
@@ -52,13 +52,13 @@ QLayoutItem* ScrollLayout::takeAt(int index)
 }
 
 //##################################################################################################
-int ScrollLayout::count()const
+int ScrollLayout::count() const
 {
   return items.size();
 }
 
 //##################################################################################################
-QSize ScrollLayout::sizeHint()const
+QSize ScrollLayout::sizeHint() const
 {
   int height = 0;
   int width = geometry().width();
@@ -81,13 +81,13 @@ QSize ScrollLayout::sizeHint()const
 }
 
 //##################################################################################################
-bool ScrollLayout::hasHeightForWidth()const
+bool ScrollLayout::hasHeightForWidth() const
 {
   return true;
 }
 
 //##################################################################################################
-int ScrollLayout::heightForWidth(int width)const
+int ScrollLayout::heightForWidth(int width) const
 {
   int height = 0;
 
@@ -146,13 +146,13 @@ void ScrollLayout::setGeometry(const QRect& r)
 }
 
 //##################################################################################################
-QRect ScrollLayout::geometry()const
+QRect ScrollLayout::geometry() const
 {
   return m_geometry;
 }
 
 //################################################################################################
-int ScrollLayout::animationSpacing()const
+int ScrollLayout::animationSpacing() const
 {
   return m_animationSpacing;
 }

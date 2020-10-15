@@ -91,7 +91,7 @@ void FileDialogLineEdit::setText(const QString& text)
 }
 
 //##################################################################################################
-QString FileDialogLineEdit::text()const
+QString FileDialogLineEdit::text() const
 {
   return d->lineEdit->text();
 }

@@ -81,7 +81,7 @@ void AnimationWidget::setFPS(int fps)
 }
 
 //################################################################################################
-QSize	AnimationWidget::sizeHint()const
+QSize	AnimationWidget::sizeHint() const
 {
   return QSize(d->animation.width(), d->animation.height());
 }

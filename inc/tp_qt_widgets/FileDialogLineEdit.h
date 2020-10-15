@@ -28,7 +28,7 @@ public:
   void setText(const QString& text);
 
   //################################################################################################
-  QString text()const;
+  QString text() const;
 
   //################################################################################################
   void setInitialDirectory(const QString& dir);

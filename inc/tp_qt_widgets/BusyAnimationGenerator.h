@@ -23,7 +23,7 @@ public:
   virtual ~BusyAnimationGenerator();
 
   //################################################################################################
-  QImage generateImage(int size)const;
+  QImage generateImage(int size) const;
 
   //################################################################################################
   void setColor(const QColor& color);
