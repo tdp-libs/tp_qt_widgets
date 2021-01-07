@@ -9,7 +9,7 @@ namespace tp_qt_widgets
 {
 
 //##################################################################################################
-//! Displays tpDebug() and tpWarning() in a widget.
+//! Displays tpDebug and tpWarning in a widget.
 class TP_QT_WIDGETS_SHARED_EXPORT DebugWidget: public QPlainTextEdit
 {
   Q_OBJECT
