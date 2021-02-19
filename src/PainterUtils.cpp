@@ -96,7 +96,7 @@ Qt::Alignment alignmentFromString(const QString& penJointStyleString)
     else if(part == "AlignCenter")          flags.append(Qt::AlignCenter);
   }
 
-  Qt::Alignment alignment=nullptr;
+  Qt::Alignment alignment;
   Q_FOREACH(Qt::AlignmentFlag flag, flags)
     alignment |= flag;
 

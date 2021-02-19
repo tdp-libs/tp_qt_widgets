@@ -33,7 +33,7 @@ QFont fontFromString(QString fontString)
   }
   while(found);
 
-  QStringList parts = fontString.split(' ', QString::SkipEmptyParts);
+  QStringList parts = fontString.split(' ', Qt::SkipEmptyParts);
 
   for(int i=0; i<parts.size(); i++)
     parts[i] = parts.at(i).toLower();
