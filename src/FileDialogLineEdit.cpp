@@ -3,6 +3,7 @@
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
+#include <QSettings>
 
 namespace tp_qt_widgets
 {
@@ -20,6 +21,8 @@ struct FileDialogLineEdit::Private
   QString initialDirectory;
   QString filter;
   FileDialogLineEdit::Mode mode{FileDialogLineEdit::DirectoryMode};
+
+  QString qSettingsPath;
 
   //################################################################################################
   Private(FileDialogLineEdit* q_):
@@ -71,6 +74,10 @@ FileDialogLineEdit::FileDialogLineEdit(QWidget* parent):
     if(!str.isEmpty())
     {
       d->lineEdit->setText(str);
+
+      if(!d->qSettingsPath.isEmpty())
+        QSettings().setValue(d->qSettingsPath, d->dir());
+
       emit d->q->selectionChanged();
     }
   });
@@ -112,6 +119,14 @@ void FileDialogLineEdit::setMode(FileDialogLineEdit::Mode mode)
 void FileDialogLineEdit::setFilter(const QString& filter)
 {
   d->filter = filter;
+}
+
+//##################################################################################################
+void FileDialogLineEdit::setQSettingsPath(const QString& qSettingsPath)
+{
+  d->qSettingsPath = qSettingsPath;
+  if(!d->qSettingsPath.isEmpty())
+    d->initialDirectory = QSettings().value(d->qSettingsPath, d->initialDirectory).toString();
 }
 
 
