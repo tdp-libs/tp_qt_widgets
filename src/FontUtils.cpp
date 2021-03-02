@@ -58,7 +58,7 @@ QFont fontFromString(QString fontString)
     else if(part.endsWith("pt"))
     {
       bool ok = false;
-      float pt = part.leftRef(part.size()-2).toFloat(&ok);
+      float pt = part.left(part.size()-2).toFloat(&ok);
 
       if(ok)
         font.setPointSizeF(qreal(pt));
@@ -66,7 +66,7 @@ QFont fontFromString(QString fontString)
     else if(part.endsWith("px"))
     {
       bool ok = false;
-      int px = part.leftRef(part.size()-2).toInt(&ok);
+      int px = part.left(part.size()-2).toInt(&ok);
 
       if(ok)
         font.setPixelSize(px);
@@ -107,7 +107,7 @@ int pixelSize(float em, const QFont& font)
   QFontMetricsF fm = QFontMetricsF(font);
 
   QChar m('M');
-  return int(em * float(fm.width(m)));
+  return int(em * float(fm.boundingRect(m).width()));
 }
 
 }
