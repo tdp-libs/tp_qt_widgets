@@ -34,6 +34,18 @@ void stayAtBottom(QAbstractItemView* listView);
 std::function<void()> keepTextSelection(QTextEdit* textEdit);
 
 #ifdef TP_ADD_WIDGET_NAME_TOOL_TIPS
+//##################################################################################################
+//! Add tool tips to all widgets containing the class name of the widget and its parents
+/*!
+Install like so:
+\code{.cpp}
+#ifdef TP_ADD_WIDGET_NAME_TOOL_TIPS
+  app.installEventFilter(new tp_qt_widgets::ClassNameToolTips(&app));
+#endif
+\endcode
+
+This relies on data added by moc so make sure your widget classes have Q_OBJECT macros in them.
+*/
 class ClassNameToolTips : public QObject
 {
 public:

@@ -15,6 +15,7 @@ This widget displays the instance counts of all the types that inplement instanc
 */
 class TP_QT_WIDGETS_SHARED_EXPORT RefCountWidget: public QWidget
 {
+  Q_OBJECT
 public:
   //################################################################################################
   //! Construct a ref count widget.

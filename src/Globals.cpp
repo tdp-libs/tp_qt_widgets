@@ -73,6 +73,7 @@ std::function<void()> keepTextSelection(QTextEdit* textEdit)
 ClassNameToolTips::ClassNameToolTips(QObject* parent):
   QObject(parent)
 {
+
 }
 
 //##################################################################################################
