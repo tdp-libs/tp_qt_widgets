@@ -122,7 +122,7 @@ bool Scroller::eventFilter(QObject* object, QEvent* event)
 
   QWidget* widget = nullptr;
   if(object->isWidgetType())
-    widget = dynamic_cast<QWidget*>(object);
+    widget = qobject_cast<QWidget*>(object);
 
   //Get the position of mouse events
   QPoint pos;

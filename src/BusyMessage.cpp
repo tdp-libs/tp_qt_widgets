@@ -77,7 +77,7 @@ struct BusyMessage::Private: public QThread
       resize();
     }
 
-    return false;
+    return QThread::eventFilter(watched, event);
   }
 
   //################################################################################################
@@ -109,7 +109,7 @@ struct BusyMessage::Private: public QThread
   //################################################################################################
   void resize()
   {
-    auto parentWidget = dynamic_cast<QWidget*>(q->parent());
+    auto parentWidget = qobject_cast<QWidget*>(q->parent());
 
     if(!parentWidget)
       return;

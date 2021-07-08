@@ -78,7 +78,7 @@ FileDialogLineEdit::FileDialogLineEdit(QWidget* parent):
       if(!d->qSettingsPath.isEmpty())
         QSettings().setValue(d->qSettingsPath, d->dir());
 
-      emit d->q->selectionChanged();
+      Q_EMIT d->q->selectionChanged();
     }
   });
 

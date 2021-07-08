@@ -62,6 +62,7 @@ QImage BusyAnimationGenerator::generateImage(int size) const
     int radius = int(center) - ((int(width)/2)+1);
 
     int iMax = int(d->maxAngle*360.0f) * 4;
+    shape.reserve(int(iMax));
     for(int i=0; i<iMax; i++)
     {
       float degrees = float(i) / 4.0f;

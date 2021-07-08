@@ -15,6 +15,7 @@ namespace tp_qt_widgets
 */
 class TP_QT_WIDGETS_SHARED_EXPORT BusyAnimationGenerator
 {
+  TP_NONCOPYABLE(BusyAnimationGenerator);
 public:
   //################################################################################################
   BusyAnimationGenerator();

@@ -25,7 +25,7 @@ ProgressBar::ProgressBar(tp_qt_utils::Progress* progress, QWidget* parent):
   d(new Private(progress))
 {
   setRange(0, 1000);
-  connect(d->progress, SIGNAL(changed()), this, SLOT(progressChanged()));
+  connect(d->progress, &tp_qt_utils::Progress::changed, this, &ProgressBar::progressChanged);
 }
 
 //##################################################################################################

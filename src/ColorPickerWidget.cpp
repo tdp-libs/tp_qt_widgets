@@ -59,7 +59,7 @@ struct ColorPickerWidget::Private
   {
     color = {rSlider->value(), gSlider->value(), bSlider->value()};
     updatePreview();
-    emit q->colorChanged();
+    Q_EMIT q->colorChanged();
   }
 };
 

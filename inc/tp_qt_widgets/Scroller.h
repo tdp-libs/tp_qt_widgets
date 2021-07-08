@@ -17,6 +17,7 @@ This class provides touch and drag scrolling for lists and scroll areas on mobil
 */
 class TP_QT_WIDGETS_SHARED_EXPORT Scroller: QObject
 {
+  Q_OBJECT
 public:
   //################################################################################################
   //! Construct a new scroller and parent it to the scrollarea

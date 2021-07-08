@@ -50,6 +50,7 @@ struct AnimationKeyFrame
 */
 class TP_QT_WIDGETS_SHARED_EXPORT Animation
 {
+  TP_NONCOPYABLE(Animation);
 public:
   //################################################################################################
   //! Construct an empty animation
