@@ -15,6 +15,7 @@
 
 class QAbstractItemView;
 class QTextEdit;
+class QPlainTextEdit;
 
 //##################################################################################################
 //! Widgets for displaying data types defined in tp_qt_utils
@@ -32,6 +33,9 @@ void stayAtBottom(QAbstractItemView* listView);
 
 //##################################################################################################
 std::function<void()> keepTextSelection(QTextEdit* textEdit);
+
+//##################################################################################################
+std::function<void()> keepTextSelection(QPlainTextEdit* textEdit);
 
 #ifdef TP_ADD_WIDGET_NAME_TOOL_TIPS
 //##################################################################################################

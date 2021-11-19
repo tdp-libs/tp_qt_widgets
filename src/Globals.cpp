@@ -7,6 +7,7 @@
 #include <QScrollBar>
 #include <QtPlugin>
 #include <QTextEdit>
+#include <QPlainTextEdit>
 
 #include <memory>
 
@@ -55,6 +56,21 @@ void stayAtBottom(QAbstractItemView* listView)
 
 //##################################################################################################
 std::function<void()> keepTextSelection(QTextEdit* textEdit)
+{
+  auto cursor = textEdit->textCursor();
+  auto start = cursor.selectionStart();
+  auto end = cursor.selectionEnd();
+  return [=]
+  {
+    auto c = textEdit->textCursor();
+    c.setPosition(start);
+    c.setPosition(end, QTextCursor::KeepAnchor);
+    textEdit->setTextCursor(c);
+  };
+}
+
+//##################################################################################################
+std::function<void()> keepTextSelection(QPlainTextEdit* textEdit)
 {
   auto cursor = textEdit->textCursor();
   auto start = cursor.selectionStart();

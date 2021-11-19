@@ -5,7 +5,7 @@
 
 #include <QProgressBar>
 
-namespace tp_qt_utils
+namespace tp_utils
 {
 class Progress;
 }
@@ -16,21 +16,17 @@ namespace tp_qt_widgets
 //##################################################################################################
 //! Used for displaying the progress of a task.
 /*!
-This is a progress bar that automatically updates when the tp_qt_utils::Progress class is changed.
+This is a progress bar that automatically updates when the tp_utils::Progress class is changed.
 */
 class TP_QT_WIDGETS_SHARED_EXPORT ProgressBar: public QProgressBar
 {
   Q_OBJECT
 public:
   //################################################################################################
-  ProgressBar(tp_qt_utils::Progress* progress, QWidget* parent=nullptr);
+  ProgressBar(tp_utils::Progress* progress, QWidget* parent=nullptr);
 
   //################################################################################################
-  virtual ~ProgressBar();
-
-private Q_SLOTS:
-  //################################################################################################
-  void progressChanged();
+  ~ProgressBar() override;
 
 private:
   struct Private;
