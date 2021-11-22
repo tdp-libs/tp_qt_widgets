@@ -25,12 +25,16 @@ struct DebugWidget::Private
   }
 
   //################################################################################################
-  tp_qt_utils::CrossThreadCallback addMessages = std::function<void()>([&]
+  tp_qt_utils::CrossThreadCallback addMessages{addMessagesCallback(), 500};
+  std::function<void()> addMessagesCallback()
   {
-    TP_MUTEX_LOCKER(mutex);
-    q->setPlainText(q->toPlainText() + QString::fromStdString(messages));
-    messages.clear();
-  });
+    return [&]
+    {
+      TP_MUTEX_LOCKER(mutex);
+      q->setPlainText(q->toPlainText() + QString::fromStdString(messages));
+      messages.clear();
+    };
+  }
 
   //################################################################################################
   tp_utils::Callback<void(tp_utils::MessageType, const std::string&)> debugCallback = [&](tp_utils::MessageType, const std::string& msg)
