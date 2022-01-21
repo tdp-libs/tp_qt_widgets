@@ -71,7 +71,7 @@ void RefCountWidget::timerEvent(QTimerEvent* event)
   {
     tp_utils::RefCount::lock();
     for(const auto& i : tp_utils::RefCount::instances())
-      instances[i.first.keyString()] = i.second;
+      instances[i.first.toString()] = i.second;
     tp_utils::RefCount::unlock();
   }
 
