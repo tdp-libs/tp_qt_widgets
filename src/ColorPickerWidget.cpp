@@ -86,17 +86,17 @@ ColorPickerWidget::ColorPickerWidget(QWidget* parent):
     sliderLayout->addWidget(d->gSlider);
     sliderLayout->addWidget(d->bSlider);
 
-    connect(d->rSlider, &QSlider::sliderMoved, [&]{d->updateColor();});
-    connect(d->gSlider, &QSlider::sliderMoved, [&]{d->updateColor();});
-    connect(d->bSlider, &QSlider::sliderMoved, [&]{d->updateColor();});
+    connect(d->rSlider, &QSlider::sliderMoved, this, [&]{d->updateColor();});
+    connect(d->gSlider, &QSlider::sliderMoved, this, [&]{d->updateColor();});
+    connect(d->bSlider, &QSlider::sliderMoved, this, [&]{d->updateColor();});
 
-    connect(d->rSlider, &QSlider::sliderReleased, [&]{d->updateColor();});
-    connect(d->gSlider, &QSlider::sliderReleased, [&]{d->updateColor();});
-    connect(d->bSlider, &QSlider::sliderReleased, [&]{d->updateColor();});
+    connect(d->rSlider, &QSlider::sliderReleased, this, [&]{d->updateColor();});
+    connect(d->gSlider, &QSlider::sliderReleased, this, [&]{d->updateColor();});
+    connect(d->bSlider, &QSlider::sliderReleased, this, [&]{d->updateColor();});
 
-    connect(d->rSlider, &QSlider::valueChanged, [&]{d->updateColor();});
-    connect(d->gSlider, &QSlider::valueChanged, [&]{d->updateColor();});
-    connect(d->bSlider, &QSlider::valueChanged, [&]{d->updateColor();});
+    connect(d->rSlider, &QSlider::valueChanged, this, [&]{d->updateColor();});
+    connect(d->gSlider, &QSlider::valueChanged, this, [&]{d->updateColor();});
+    connect(d->bSlider, &QSlider::valueChanged, this, [&]{d->updateColor();});
 
     hLayout->addLayout(sliderLayout);
   }

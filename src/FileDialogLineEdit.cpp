@@ -60,7 +60,7 @@ FileDialogLineEdit::FileDialogLineEdit(QWidget* parent):
   d->pushButton = new QPushButton("Select");
   d->pushButton->setFixedWidth(100);
 
-  connect(d->pushButton, &QPushButton::clicked, [&]()
+  connect(d->pushButton, &QPushButton::clicked, this, [&]()
   {
     QString str;
 
