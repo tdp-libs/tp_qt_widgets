@@ -197,7 +197,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
 
         if(dialog)
         {
-          if(!dialog->d->keepOpen->isChecked())
+          if(ok && !dialog->d->keepOpen->isChecked())
             dialog->reject();
           else
             showCloseButton();
