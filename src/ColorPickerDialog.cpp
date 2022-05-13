@@ -49,9 +49,21 @@ void ColorPickerDialog::setColor(const QColor& color)
 }
 
 //##################################################################################################
-QColor ColorPickerDialog::color() const
+void ColorPickerDialog::setColor(TPPixel color)
 {
-  return d->colorPickerWidget->color();
+  d->colorPickerWidget->setColor(color);
+}
+
+//##################################################################################################
+QColor ColorPickerDialog::qColor() const
+{
+  return d->colorPickerWidget->qColor();
+}
+
+//##################################################################################################
+TPPixel ColorPickerDialog::tpPixel() const
+{
+  return d->colorPickerWidget->tpPixel();
 }
 
 //##################################################################################################
@@ -67,7 +79,23 @@ QColor ColorPickerDialog::getColor(const QColor& color, const QString& title, QD
   if(!dialog || result != QDialog::Accepted)
     return QColor();
 
-  return dialog->color();
+  return dialog->qColor();
+}
+
+//##################################################################################################
+TPPixel ColorPickerDialog::getColor(const TPPixel& color, const QString& title, QDialog* parent)
+{
+  QPointer<ColorPickerDialog> dialog = new ColorPickerDialog(parent);
+  TP_CLEANUP([&]{delete dialog;});
+
+  dialog->setWindowTitle(title);
+  dialog->setColor(color);
+  auto result = dialog->exec();
+
+  if(!dialog || result != QDialog::Accepted)
+    return TPPixel();
+
+  return dialog->tpPixel();
 }
 
 }

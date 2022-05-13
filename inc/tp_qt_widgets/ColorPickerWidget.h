@@ -3,6 +3,8 @@
 
 #include "tp_qt_widgets/Globals.h"
 
+#include "tp_utils/TPPixel.h"
+
 #include <QWidget>
 
 namespace tp_qt_widgets
@@ -24,7 +26,13 @@ public:
   void setColor(const QColor& color);
 
   //################################################################################################
-  QColor color() const;
+  void setColor(TPPixel color);
+
+  //################################################################################################
+  QColor qColor() const;
+
+  //################################################################################################
+  TPPixel tpPixel() const;
 
   //################################################################################################
   Q_SIGNAL void colorChanged();

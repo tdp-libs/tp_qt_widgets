@@ -3,6 +3,8 @@
 
 #include "tp_qt_widgets/Globals.h"
 
+#include "tp_utils/TPPixel.h"
+
 #include <QDialog>
 
 namespace tp_qt_widgets
@@ -24,10 +26,19 @@ public:
   void setColor(const QColor& color);
 
   //################################################################################################
-  QColor color() const;
+  void setColor(TPPixel color);
+
+  //################################################################################################
+  QColor qColor() const;
+
+  //################################################################################################
+  TPPixel tpPixel() const;
 
   //################################################################################################
   static QColor getColor(const QColor& color, const QString& title, QDialog* parent=nullptr);
+
+  //################################################################################################
+  static TPPixel getColor(const TPPixel& color, const QString& title, QDialog* parent=nullptr);
 
 private:
   struct Private;
