@@ -33,6 +33,12 @@ HEADERS += inc/tp_qt_widgets/ColorPickerDialog.h
 SOURCES += src/DebugWidget.cpp
 HEADERS += inc/tp_qt_widgets/DebugWidget.h
 
+SOURCES += src/CollapsiblePanel.cpp
+HEADERS += inc/tp_qt_widgets/CollapsiblePanel.h
+
+SOURCES += src/ExclusiveCollapsibleStack.cpp
+HEADERS += inc/tp_qt_widgets/ExclusiveCollapsibleStack.h
+
 SOURCES += src/Globals.cpp
 HEADERS += inc/tp_qt_widgets/Globals.h
 
