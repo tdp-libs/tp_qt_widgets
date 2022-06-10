@@ -1,7 +1,7 @@
 #include "tp_qt_widgets/CollapsiblePanel.h"
 
 #include <QScrollArea>
-#include <QPropertyAnimation>
+#include <QVariantAnimation>
 #include <QBoxLayout>
 
 namespace tp_qt_widgets
@@ -13,7 +13,7 @@ struct CollapsiblePanel::Private
   CollapsiblePanel* q;
   QScrollArea* contentArea{nullptr};
 
-  QPropertyAnimation* contentAnimation{nullptr};
+  QVariantAnimation* contentAnimation{nullptr};
 
   //################################################################################################
   Private(CollapsiblePanel* q_):
@@ -26,10 +26,19 @@ struct CollapsiblePanel::Private
   void makeAnimation(float start, float end, int duration)
   {
     delete contentAnimation;
-    contentAnimation = new QPropertyAnimation(q);
+    contentAnimation = new QVariantAnimation(q);
     contentAnimation->setDuration(duration);
     contentAnimation->setStartValue(start);
     contentAnimation->setEndValue(end);
+
+    QObject::connect(contentAnimation, &QVariantAnimation::valueChanged, q, [&](const QVariant& v)
+    {
+      float f = v.toFloat();
+      float height = float(contentArea->layout()->sizeHint().height()) * f + 0.5f;
+      q->setMaximumHeight(int(height));
+    });
+
+    contentAnimation->start();
   }
 };
 

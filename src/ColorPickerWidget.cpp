@@ -118,6 +118,9 @@ ColorPickerWidget::~ColorPickerWidget()
 //##################################################################################################
 void ColorPickerWidget::setColor(const QColor& color)
 {
+  if(d->color == color)
+    return;
+
   d->color = color;
   d->updateUI();
 }
@@ -125,6 +128,9 @@ void ColorPickerWidget::setColor(const QColor& color)
 //##################################################################################################
 void ColorPickerWidget::setColor(TPPixel color)
 {
+  if(tpPixel() == color)
+    return;
+
   d->color.setRed  (color.r);
   d->color.setGreen(color.g);
   d->color.setBlue (color.b);
