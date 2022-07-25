@@ -1,9 +1,11 @@
+
 #include "tp_qt_widgets/BlockingOperationDialog.h"
 #include "tp_qt_widgets/ProgressBar.h"
 
 #include <QPointer>
 #include <QBoxLayout>
 #include <QPlainTextEdit>
+#include <QTextEdit>
 #include <QDialogButtonBox>
 #include <QScrollBar>
 #include <QTimer>
@@ -24,7 +26,8 @@ struct BlockingOperationDialog::Private
   bool ok=false;
   bool allowClose=false;
 
-  QPlainTextEdit* messages{nullptr};
+  //QPlainTextEdit* messages{nullptr};
+  QTextEdit* messages{nullptr};
   tp_qt_widgets::ProgressBar* progressBar{nullptr};
   QCheckBox* keepOpen{nullptr};
   QDialogButtonBox* buttons{nullptr};
@@ -60,12 +63,17 @@ struct BlockingOperationDialog::Private
       std::string text;
       for(const auto& message : progress.allMessages())
       {
-        text += std::string(message.indentation*4, ' ');
-        text += message.message;
-        text += '\n';
+        size_t iMax = message.indentation*4;
+        for(size_t i=0; i<iMax; i++)
+        text += "&nbsp;";
+        if(message.error)
+          text += "<font color=#8b0000><b>" + message.message + "</b></font>";
+        else
+          text += message.message;
+        text += "<br>";
       }
 
-      messages->setPlainText(QString::fromStdString(text));
+      messages->setHtml(QString::fromStdString(text));
     }
 
     if(atBottom)
@@ -87,7 +95,7 @@ BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& po
   d->progressBar = new tp_qt_widgets::ProgressBar(&d->progress);
   l->addWidget(d->progressBar);
 
-  d->messages = new QPlainTextEdit();
+  d->messages = new QTextEdit();
   l->addWidget(d->messages);
   d->messages->setReadOnly(true);
   d->messages->setWordWrapMode(QTextOption::NoWrap);
@@ -160,7 +168,9 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
       if(dialog)
       {
         dialog->d->progress.setProgress(1.0f);
-        dialog->d->messages->viewport()->setStyleSheet("background-color: #c9ffd8");
+        QPalette p = dialog->d->messages->palette();
+        p.setColor(QPalette::Base, QColor(201, 255, 216));
+        dialog->d->messages->setPalette(p);
         if(!dialog->d->keepOpen->isChecked())
           dialog->accept();
         else
@@ -169,7 +179,9 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
     }
     else
     {
-      dialog->d->messages->viewport()->setStyleSheet("background-color: #ffbdbd");
+      QPalette p = dialog->d->messages->palette();
+      p.setColor(QPalette::Base, QColor(255, 189, 189));
+      dialog->d->messages->setPalette(p);
       QPointer<QDialog> errorDialog = new QDialog(dialog);
 
       errorDialog->setWindowTitle("Error!");
