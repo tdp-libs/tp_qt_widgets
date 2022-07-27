@@ -20,7 +20,7 @@ public:
   ~ExclusiveCollapsibleStack() override;
 
   //################################################################################################
-  void addPage(const QString& title, QLayout* layout);
+  size_t addPage(const QString& title, QLayout* layout);
 
   //################################################################################################
   void expandPage(size_t page);
@@ -30,6 +30,10 @@ public:
 
   //################################################################################################
   size_t currentPage() const;
+
+//protected:
+//  //################################################################################################
+//  bool eventFilter(QObject* watched, QEvent* event) override;
 
 private:
   struct Private;

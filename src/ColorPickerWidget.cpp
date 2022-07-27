@@ -139,6 +139,12 @@ void ColorPickerWidget::setColor(TPPixel color)
 }
 
 //##################################################################################################
+void ColorPickerWidget::setColor(const glm::vec3& color)
+{
+  setColor(QColor::fromRgbF(color.x, color.y, color.z));
+}
+
+//##################################################################################################
 QColor ColorPickerWidget::qColor() const
 {
   return d->color;
@@ -153,6 +159,12 @@ TPPixel ColorPickerWidget::tpPixel() const
   color.b = d->color.blue ();
   color.a = d->color.alpha();
   return color;
+}
+
+//##################################################################################################
+glm::vec3 ColorPickerWidget::vec3() const
+{
+  return glm::vec3(d->color.redF(), d->color.greenF(), d->color.blueF());
 }
 
 }

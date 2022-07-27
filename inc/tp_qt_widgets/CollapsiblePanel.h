@@ -28,6 +28,10 @@ public:
   //################################################################################################
   void collapse();
 
+protected:
+  //################################################################################################
+  bool eventFilter(QObject* watched, QEvent* event) override;
+
 private:
   struct Private;
   Private* d;

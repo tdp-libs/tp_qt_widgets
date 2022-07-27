@@ -3,6 +3,7 @@
 #include <QScrollArea>
 #include <QVariantAnimation>
 #include <QBoxLayout>
+#include <QEvent>
 
 namespace tp_qt_widgets
 {
@@ -14,6 +15,8 @@ struct CollapsiblePanel::Private
   QScrollArea* contentArea{nullptr};
 
   QVariantAnimation* contentAnimation{nullptr};
+
+  float f{1.0f};
 
   //################################################################################################
   Private(CollapsiblePanel* q_):
@@ -33,12 +36,25 @@ struct CollapsiblePanel::Private
 
     QObject::connect(contentAnimation, &QVariantAnimation::valueChanged, q, [&](const QVariant& v)
     {
-      float f = v.toFloat();
-      float height = float(contentArea->layout()->sizeHint().height()) * f + 0.5f;
-      q->setMaximumHeight(int(height));
+      f = v.toFloat();
+      updateGeometry();
     });
 
     contentAnimation->start();
+  }
+
+  //################################################################################################
+  void updateGeometry()
+  {
+    float height = float(contentArea->layout()->sizeHint().height()) * f;
+
+    if(contentArea->layout()->expandingDirections() & Qt::Orientation::Vertical)
+      height*=2;
+
+    height += 0.5f;
+
+    q->setMaximumHeight(int(height));
+    q->updateGeometry();
   }
 };
 
@@ -52,6 +68,7 @@ CollapsiblePanel::CollapsiblePanel(QWidget* parent):
 
   d->contentArea = new QScrollArea();
   l->addWidget(d->contentArea);
+  d->contentArea->installEventFilter(this);
 }
 
 //##################################################################################################
@@ -103,4 +120,14 @@ void CollapsiblePanel::collapse()
   d->makeAnimation(start, end, duration);
 }
 
+//##################################################################################################
+bool CollapsiblePanel::eventFilter(QObject* watched, QEvent* event)
+{
+  TP_UNUSED(watched);
+
+  if(event->type() == QEvent::LayoutRequest)
+    d->updateGeometry();
+
+  return false;
+}
 }

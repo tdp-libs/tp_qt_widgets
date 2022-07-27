@@ -3,6 +3,7 @@
 
 #include <QRadioButton>
 #include <QBoxLayout>
+#include <QEvent>
 
 namespace tp_qt_widgets
 {
@@ -31,7 +32,7 @@ struct ExclusiveCollapsibleStack::Private
       if(page.button->isChecked())
         page.panel->expand();
       else
-        page.panel->collapse();
+        page.panel->collapse();      
     }
   }
 };
@@ -52,25 +53,34 @@ ExclusiveCollapsibleStack::~ExclusiveCollapsibleStack()
 }
 
 //##################################################################################################
-void ExclusiveCollapsibleStack::addPage(const QString& title, QLayout* layout)
+size_t ExclusiveCollapsibleStack::addPage(const QString& title, QLayout* layout)
 {
+  size_t index = d->pages.size();
   auto& page = d->pages.emplace_back();
 
-  page.button = new QRadioButton(title);
-  d->l->insertWidget(d->l->count()-1, page.button);
+  auto button = new QRadioButton(title);
+  page.button = button;
+  d->l->insertWidget(d->l->count()-1, page.button, 0);
   if(d->pages.size() == 1)
     page.button->setChecked(true);
-  connect(page.button, &QRadioButton::clicked, this, [&]
+  connect(page.button, &QRadioButton::clicked, this, [=]
   {
+    for(const auto& p : d->pages)
+      p.button->setChecked(p.button == button);
+
     d->updatePanels();
     emit currentPageChanged();
   });
 
   page.panel = new CollapsiblePanel();
-  d->l->insertWidget(d->l->count()-1, page.panel);
+  d->l->insertWidget(d->l->count()-1, page.panel, 1);
   page.panel->setContentLayout(layout);
+  page.panel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+
+//  page.panel->installEventFilter(this);
 
   d->updatePanels();
+  return index;
 }
 
 //##################################################################################################
@@ -92,5 +102,20 @@ size_t ExclusiveCollapsibleStack::currentPage() const
 
   return 0;
 }
+
+////##################################################################################################
+//bool ExclusiveCollapsibleStack::eventFilter(QObject* watched, QEvent* event)
+//{
+//  if(event->type() == QEvent::LayoutRequest)
+//  {
+//    //d->l->update();
+//    updateGeometry();
+//    //adjustSize();
+//  }
+//  return false;
+//}
+
+
+
 
 }
