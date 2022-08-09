@@ -1,5 +1,7 @@
 #include "tp_qt_widgets/ColorPickerWidget.h"
 
+#include "tp_utils/RefCount.h"
+
 #include <QBoxLayout>
 #include <QSlider>
 #include <QFrame>

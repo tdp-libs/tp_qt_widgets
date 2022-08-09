@@ -1,6 +1,8 @@
 #include "tp_qt_widgets/ColorPickerDialog.h"
 #include "tp_qt_widgets/ColorPickerWidget.h"
 
+#include "tp_utils/RefCount.h"
+
 #include <QDialogButtonBox>
 #include <QBoxLayout>
 #include <QPointer>

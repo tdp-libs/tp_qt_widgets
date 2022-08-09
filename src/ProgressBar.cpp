@@ -1,6 +1,7 @@
 #include "tp_qt_widgets/ProgressBar.h"
 
 #include "tp_utils/Progress.h"
+#include "tp_utils/RefCount.h"
 
 namespace tp_qt_widgets
 {

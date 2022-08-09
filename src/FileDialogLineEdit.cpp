@@ -1,5 +1,7 @@
 #include "tp_qt_widgets/FileDialogLineEdit.h"
 
+#include "tp_utils/RefCount.h"
+
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
