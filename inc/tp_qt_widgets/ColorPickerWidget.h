@@ -5,8 +5,6 @@
 
 #include "tp_utils/TPPixel.h"
 
-#include "glm/glm.hpp"
-
 #include <QWidget>
 
 namespace tp_qt_widgets
@@ -31,7 +29,11 @@ public:
   void setColor(TPPixel color);
 
   //################################################################################################
-  void setColor(const glm::vec3& color);
+  template<typename T>
+  void setColor(const T& color)
+  {
+    setColor(QColor::fromRgbF(color.x, color.y, color.z));
+  }
 
   //################################################################################################
   QColor qColor() const;
@@ -40,7 +42,12 @@ public:
   TPPixel tpPixel() const;
 
   //################################################################################################
-  glm::vec3 vec3() const;
+  template<typename T>
+  T toFloat3() const
+  {
+    auto c = qColor();
+    return T(c.redF(), c.greenF(), c.blueF());
+  }
 
   //################################################################################################
   Q_SIGNAL void colorChanged();
