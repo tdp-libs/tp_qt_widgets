@@ -27,6 +27,18 @@ HEADERS += inc/tp_qt_widgets/FileDialogLineEdit.h
 SOURCES += src/ColorPickerWidget.cpp
 HEADERS += inc/tp_qt_widgets/ColorPickerWidget.h
 
+SOURCES += src/detail/ColorPicker.cpp
+HEADERS += inc/tp_qt_widgets/detail/ColorPicker.h
+
+SOURCES += src/detail/ColorPicker_HSVCircle.cpp
+HEADERS += inc/tp_qt_widgets/detail/ColorPicker_HSVCircle.h
+
+SOURCES += src/detail/ColorPicker_HSVSquare.cpp
+HEADERS += inc/tp_qt_widgets/detail/ColorPicker_HSVSquare.h
+
+SOURCES += src/detail/ColorPicker_RGBSlider.cpp
+HEADERS += inc/tp_qt_widgets/detail/ColorPicker_RGBSlider.h
+
 SOURCES += src/ColorPickerDialog.cpp
 HEADERS += inc/tp_qt_widgets/ColorPickerDialog.h
 

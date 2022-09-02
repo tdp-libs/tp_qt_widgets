@@ -1,70 +1,56 @@
-#ifndef tp_qt_widgets_ColorPickerWidget_h
-#define tp_qt_widgets_ColorPickerWidget_h
+#ifndef tp_qt_widgets_ColorPicker_h
+#define tp_qt_widgets_ColorPicker_h
 
 #include "tp_qt_widgets/Globals.h"
-
-#include "tp_utils/TPPixel.h"
 
 #include <QWidget>
 
 namespace tp_qt_widgets
 {
 
+namespace detail
+{
+
 //##################################################################################################
 //! A color picker
-class TP_QT_WIDGETS_SHARED_EXPORT ColorPickerWidget: public QWidget
+class TP_QT_WIDGETS_SHARED_EXPORT ColorPicker: public QWidget
 {
   Q_OBJECT
 public:
-
-  enum class Mode
-  {
-    HSVCircle,
-    HSVSquare,
-    RGBSlider
-  };
+  //################################################################################################
+  ColorPicker(QWidget* parent=nullptr);
 
   //################################################################################################
-  ColorPickerWidget(Mode mode=Mode::RGBSlider, QWidget* parent=nullptr);
+  virtual void set(const QColor& color)=0;
 
   //################################################################################################
-  ~ColorPickerWidget() override;
+  virtual QColor get() const=0;
 
   //################################################################################################
-  void setColor(const QColor& color);
+  bool bestContrastIsBlack();
 
   //################################################################################################
-  void setColor(TPPixel color);
-
-  //################################################################################################
-  template<typename T>
-  void setColor(const T& color)
-  {
-    setColor(QColor::fromRgbF(color.x, color.y, color.z));
-  }
-
-  //################################################################################################
-  QColor qColor() const;
-
-  //################################################################################################
-  TPPixel tpPixel() const;
-
-  //################################################################################################
-  template<typename T>
-  T toFloat3() const
-  {
-    auto c = qColor();
-    return T(c.redF(), c.greenF(), c.blueF());
-  }
+  //! Components: 'r', 'g', 'b', 'h', 's', 'v'
+  double getComponentF(char component);
 
   //################################################################################################
   Q_SIGNAL void colorChanged();
 
-private:
-  struct Private;
-  Private* d;
-  friend struct Private;
+  //################################################################################################
+  QSize minimumSizeHint() const override;
+
+  //################################################################################################
+  QSize sizeHint() const override;
+
+  //################################################################################################
+  bool hasHeightForWidth() const override;
+
+  //################################################################################################
+  int heightForWidth(int w) const override;
+
 };
+
+}
 
 }
 
