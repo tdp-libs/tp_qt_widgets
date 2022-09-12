@@ -53,19 +53,19 @@ void ColorPicker_HSVCircle::paintEvent(QPaintEvent *event)
 //##################################################################################################
 void ColorPicker_HSVCircle::mouseMoveEvent(QMouseEvent* event)
 {
-
+  TP_UNUSED(event);
 }
 
 //##################################################################################################
 void ColorPicker_HSVCircle::mousePressEvent(QMouseEvent* event)
 {
-
+  TP_UNUSED(event);
 }
 
 //##################################################################################################
 void ColorPicker_HSVCircle::mouseReleaseEvent(QMouseEvent* event)
 {
-
+  TP_UNUSED(event);
 }
 
 }
