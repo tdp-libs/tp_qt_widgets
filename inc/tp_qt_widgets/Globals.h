@@ -1,7 +1,7 @@
 #ifndef tp_qt_widgets_Globals_h
 #define tp_qt_widgets_Globals_h
 
-#include "tp_qt_utils/Globals.h"
+#include "tp_qt_utils/Globals.h" // IWYU pragma: keep
 
 #include <QtCore/qglobal.h>
 

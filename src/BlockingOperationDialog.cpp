@@ -1,4 +1,3 @@
-
 #include "tp_qt_widgets/BlockingOperationDialog.h"
 #include "tp_qt_widgets/ProgressBar.h"
 

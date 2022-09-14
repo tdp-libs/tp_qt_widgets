@@ -1,7 +1,7 @@
 #ifndef tp_qt_widgets_BlockingOperationDialog_h
 #define tp_qt_widgets_BlockingOperationDialog_h
 
-#include "tp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/Globals.h" // IWYU pragma: keep
 
 #include "tp_utils/Progress.h"
 
