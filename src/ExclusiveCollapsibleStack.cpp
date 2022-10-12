@@ -86,6 +86,9 @@ size_t ExclusiveCollapsibleStack::addPage(const QString& title, QLayout* layout)
 //##################################################################################################
 void ExclusiveCollapsibleStack::expandPage(size_t page)
 {
+  blockSignals(true);
+  TP_CLEANUP([&]{blockSignals(false);});
+
   if(page>=d->pages.size())
     return;
 
