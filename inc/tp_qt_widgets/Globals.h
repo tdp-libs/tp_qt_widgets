@@ -4,6 +4,7 @@
 #include "tp_qt_utils/Globals.h" // IWYU pragma: keep
 
 #include <QtCore/qglobal.h>
+#include <QObject>  // IWYU pragma: keep
 
 #include <functional>
 
