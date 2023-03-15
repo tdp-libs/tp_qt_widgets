@@ -8,32 +8,56 @@
 namespace tp_qt_widgets
 {
 
+enum class StackButtonStyle
+{
+  RadioButton,
+  Button
+};
+
 //##################################################################################################
 class TP_QT_WIDGETS_SHARED_EXPORT ExclusiveCollapsibleStack: public QWidget
 {
   Q_OBJECT
 public:
   //################################################################################################
-  ExclusiveCollapsibleStack(QWidget* parent=nullptr);
+  ExclusiveCollapsibleStack(StackButtonStyle buttonStyle, QWidget* parent=nullptr);
 
   //################################################################################################
   ~ExclusiveCollapsibleStack() override;
 
   //################################################################################################
-  size_t addPage(const QString& title, QLayout* layout);
+  size_t addPage(const QString& title, QLayout* layout, bool expand=false);
 
   //################################################################################################
-  void expandPage(size_t page);
+  size_t insertPage(size_t index, const QString& title, QLayout* layout, bool expand=false);
 
   //################################################################################################
-  Q_SIGNAL void currentPageChanged();
+  void removePage(size_t index);
+
+  //################################################################################################
+  size_t count() const;
+
+  //################################################################################################
+  QLayout* page(size_t index) const;
+
+  //################################################################################################
+  void expandPage(size_t index);
 
   //################################################################################################
   size_t currentPage() const;
 
-//protected:
-//  //################################################################################################
-//  bool eventFilter(QObject* watched, QEvent* event) override;
+  //################################################################################################
+  void addWidgetToButton(size_t index, QWidget* widget);
+
+  //################################################################################################
+  Q_SIGNAL void currentPageChanged();
+
+protected:
+  //################################################################################################
+  void resizeEvent(QResizeEvent* event) override;
+
+  //################################################################################################
+   void showEvent(QShowEvent* event) override;
 
 private:
   struct Private;

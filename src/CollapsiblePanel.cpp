@@ -18,6 +18,8 @@ struct CollapsiblePanel::Private
 
   float f{1.0f};
 
+  bool expanded{true};
+
   //################################################################################################
   Private(CollapsiblePanel* q_):
     q(q_)
@@ -38,6 +40,7 @@ struct CollapsiblePanel::Private
     {
       f = v.toFloat();
       updateGeometry();
+      emit q->expansionFactorChanged();
     });
 
     contentAnimation->start();
@@ -46,12 +49,11 @@ struct CollapsiblePanel::Private
   //################################################################################################
   void updateGeometry()
   {
-    float height = float(contentArea->layout()->sizeHint().height()) * f;
+    float height = 1000.0f;
+    if(auto w=q->parentWidget(); w)
+      height=w->height();
 
-    if(contentArea->layout()->expandingDirections() & Qt::Orientation::Vertical)
-      height*=2;
-
-    height += 0.5f;
+    height*=f;
 
     q->setMaximumHeight(int(height));
     q->updateGeometry();
@@ -67,8 +69,12 @@ CollapsiblePanel::CollapsiblePanel(QWidget* parent):
   l->setContentsMargins(0,0,0,0);
 
   d->contentArea = new QScrollArea();
-  l->addWidget(d->contentArea);
+  d->contentArea->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+  l->addWidget(d->contentArea, 1);
   d->contentArea->installEventFilter(this);
+  d->contentArea->setFrameStyle(QFrame::NoFrame);
+
+  d->updateGeometry();
 }
 
 //##################################################################################################
@@ -85,8 +91,21 @@ void CollapsiblePanel::setContentLayout(QLayout* layout)
 }
 
 //##################################################################################################
+QLayout* CollapsiblePanel::contentLayout() const
+{
+  return d->contentArea->layout();
+}
+
+//##################################################################################################
 void CollapsiblePanel::expand()
 {
+  if(d->expanded)
+    return;
+
+  d->expanded = true;
+  setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
+
+
   int duration = 300;
   float start = 0.0f;
   float end = 1.0f;
@@ -99,12 +118,21 @@ void CollapsiblePanel::expand()
     duration -= (duration - d->contentAnimation->currentTime());
   }
 
+  if(duration<1)
+    duration = 10;
+
   d->makeAnimation(start, end, duration);
 }
 
 //##################################################################################################
 void CollapsiblePanel::collapse()
 {
+  if(!d->expanded)
+    return;
+
+  d->expanded = false;
+  setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+
   int duration = 300;
   float start = 1.0f;
   float end = 0.0f;
@@ -117,7 +145,23 @@ void CollapsiblePanel::collapse()
     duration -= (duration - d->contentAnimation->currentTime());
   }
 
+  if(duration<1)
+    duration = 10;
+
   d->makeAnimation(start, end, duration);
+}
+
+//##################################################################################################
+float CollapsiblePanel::expansionFactor() const
+{
+  return d->f;
+}
+
+//################################################################################################
+void CollapsiblePanel::showEvent(QShowEvent* event)
+{
+  d->updateGeometry();
+  QWidget::showEvent(event);
 }
 
 //##################################################################################################
