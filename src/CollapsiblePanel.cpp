@@ -39,24 +39,11 @@ struct CollapsiblePanel::Private
     QObject::connect(contentAnimation, &QVariantAnimation::valueChanged, q, [&](const QVariant& v)
     {
       f = v.toFloat();
-      updateGeometry();
+      q->recalculateGeometry();
       emit q->expansionFactorChanged();
     });
 
     contentAnimation->start();
-  }
-
-  //################################################################################################
-  void updateGeometry()
-  {
-    float height = 1000.0f;
-    if(auto w=q->parentWidget(); w)
-      height=w->height();
-
-    height*=f;
-
-    q->setMaximumHeight(int(height));
-    q->updateGeometry();
   }
 };
 
@@ -74,7 +61,7 @@ CollapsiblePanel::CollapsiblePanel(QWidget* parent):
   d->contentArea->installEventFilter(this);
   d->contentArea->setFrameStyle(QFrame::NoFrame);
 
-  d->updateGeometry();
+  recalculateGeometry();
 }
 
 //##################################################################################################
@@ -157,10 +144,23 @@ float CollapsiblePanel::expansionFactor() const
   return d->f;
 }
 
+//##################################################################################################
+void CollapsiblePanel::recalculateGeometry()
+{
+  float height = 1000.0f;
+  if(auto w=parentWidget(); w)
+    height=w->height();
+
+  height*=d->f;
+
+  setMaximumHeight(int(height));
+  updateGeometry();
+}
+
 //################################################################################################
 void CollapsiblePanel::showEvent(QShowEvent* event)
 {
-  d->updateGeometry();
+  recalculateGeometry();
   QWidget::showEvent(event);
 }
 
@@ -170,7 +170,7 @@ bool CollapsiblePanel::eventFilter(QObject* watched, QEvent* event)
   TP_UNUSED(watched);
 
   if(event->type() == QEvent::LayoutRequest)
-    d->updateGeometry();
+    recalculateGeometry();
 
   return false;
 }

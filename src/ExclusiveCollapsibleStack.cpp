@@ -205,6 +205,9 @@ void ExclusiveCollapsibleStack::addWidgetToButton(size_t index, QWidget* widget)
 //##################################################################################################
 void ExclusiveCollapsibleStack::resizeEvent(QResizeEvent* event)
 {
+  for(const auto& page : d->pages)
+    page.panel->recalculateGeometry();
+
   d->updateStretch();
   QWidget::resizeEvent(event);
 }
