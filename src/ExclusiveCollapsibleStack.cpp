@@ -183,7 +183,12 @@ void ExclusiveCollapsibleStack::expandPage(size_t index)
     return;
 
   if(const auto& button = d->pages.at(index).button; !button->isChecked())
-    button->click();
+  {
+    for(size_t i=0; i<d->pages.size(); i++)
+      d->pages.at(i).button->setChecked(i==index);
+
+    d->updatePanels();
+  }
 }
 
 //##################################################################################################
