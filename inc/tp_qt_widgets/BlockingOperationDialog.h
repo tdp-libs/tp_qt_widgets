@@ -16,7 +16,9 @@ class BlockingOperationDialog : public QDialog
   Q_OBJECT
 public:
   //################################################################################################
-  BlockingOperationDialog(const std::function<bool()>& poll, QWidget* parent);
+  BlockingOperationDialog(const std::function<bool()>& poll,
+                          const QString& windowTitle,
+                          QWidget* parent);
 
   //################################################################################################
   ~BlockingOperationDialog() override;

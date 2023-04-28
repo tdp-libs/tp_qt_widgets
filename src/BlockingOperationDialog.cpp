@@ -21,6 +21,7 @@ namespace tp_qt_widgets
 struct BlockingOperationDialog::Private
 {
   std::function<bool()> poll;
+  std::string windowTitle;
   bool finish{false};
   bool ok=false;
   bool allowClose=false;
@@ -32,9 +33,9 @@ struct BlockingOperationDialog::Private
   QDialogButtonBox* buttons{nullptr};
 
   //################################################################################################
-  Private(const std::function<bool()>& poll_):
+  Private(const std::function<bool()>& poll_, const QString& windowTitle_):
     poll(poll_),
-    progress(poll)
+    windowTitle(windowTitle_.toStdString())
   {
     changed.connect(progress.changed);
   }
@@ -45,7 +46,7 @@ struct BlockingOperationDialog::Private
     if(!poll())
       return false;
     return !finish;
-  });
+  }, windowTitle);
 
   //################################################################################################
   tp_utils::Callback<void()> changed = [&]
@@ -85,10 +86,13 @@ struct BlockingOperationDialog::Private
 };
 
 //##################################################################################################
-BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& poll, QWidget* parent):
+BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& poll,
+                                                 const QString& windowTitle,
+                                                 QWidget* parent):
   QDialog(parent),
-  d(new Private(poll))
+  d(new Private(poll, windowTitle))
 {
+  setWindowTitle(windowTitle);
   auto l = new QVBoxLayout(this);
 
   d->progressBar = new tp_qt_widgets::ProgressBar(&d->progress);
@@ -136,9 +140,8 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
                                    QWidget* parent,
                                    const std::function<bool(QWidget* parent, tp_utils::Progress* progress)>& closure)
 {
-  QPointer<BlockingOperationDialog> dialog = new BlockingOperationDialog(poll, parent);
+  QPointer<BlockingOperationDialog> dialog = new BlockingOperationDialog(poll, windowTitle, parent);
   TP_CLEANUP([&]{delete dialog;});
-  dialog->setWindowTitle(windowTitle);
   dialog->setFixedSize(600, 480);
 
   auto timer = new QTimer(dialog);
