@@ -31,6 +31,7 @@ struct BlockingOperationDialog::Private
   tp_qt_widgets::ProgressBar* progressBar{nullptr};
   QCheckBox* keepOpen{nullptr};
   QDialogButtonBox* buttons{nullptr};
+  QBoxLayout* buttonLayout{nullptr};
 
   //################################################################################################
   Private(const std::function<bool()>& poll_, const QString& windowTitle_):
@@ -107,8 +108,12 @@ BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& po
   d->keepOpen->setChecked(QSettings().value("BlockingOperationDialog_keepOpen").toBool());
   l->addWidget(d->keepOpen);
 
+  d->buttonLayout = new QHBoxLayout();
+  d->buttonLayout->setContentsMargins(0,0,0,0);
+  l->addLayout(d->buttonLayout);
+
   d->buttons = new QDialogButtonBox(QDialogButtonBox::Cancel);
-  l->addWidget(d->buttons);
+  d->buttonLayout->addWidget(d->buttons);
   connect(d->buttons, &QDialogButtonBox::rejected, this, [=]
   {
     d->progress.addError("Canceled!");
@@ -125,6 +130,12 @@ BlockingOperationDialog::~BlockingOperationDialog()
 }
 
 //##################################################################################################
+void BlockingOperationDialog::addWidgetLefOfButtons(QWidget* widget)
+{
+  d->buttonLayout->insertWidget(d->buttonLayout->count()-1, widget);
+}
+
+//##################################################################################################
 bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
                                    const QString& windowTitle,
                                    QWidget* parent,
@@ -138,7 +149,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
 bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
                                    const QString& windowTitle,
                                    QWidget* parent,
-                                   const std::function<bool(QWidget* parent, tp_utils::Progress* progress)>& closure)
+                                   const std::function<bool(BlockingOperationDialog* parent, tp_utils::Progress* progress)>& closure)
 {
   QPointer<BlockingOperationDialog> dialog = new BlockingOperationDialog(poll, windowTitle, parent);
   TP_CLEANUP([&]{delete dialog;});
