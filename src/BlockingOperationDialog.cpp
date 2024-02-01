@@ -84,6 +84,12 @@ struct BlockingOperationDialog::Private
 
     poll();
   };
+
+  //################################################################################################
+  bool shouldKeepOpen()
+  {
+    return keepOpen->isChecked() && !keepOpen->isHidden();
+  }
 };
 
 //##################################################################################################
@@ -136,6 +142,12 @@ void BlockingOperationDialog::addWidgetLefOfButtons(QWidget* widget)
 }
 
 //##################################################################################################
+void BlockingOperationDialog::disableKeepOpen()
+{
+  d->keepOpen->hide();
+}
+
+//##################################################################################################
 bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
                                    const QString& windowTitle,
                                    QWidget* parent,
@@ -184,7 +196,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
         QPalette p = dialog->d->messages->palette();
         p.setColor(QPalette::Base, QColor(201, 255, 216));
         dialog->d->messages->setPalette(p);
-        if(!dialog->d->keepOpen->isChecked())
+        if(!dialog->d->shouldKeepOpen())
           dialog->accept();
         else
           showCloseButton();
@@ -222,7 +234,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
 
         if(dialog)
         {
-          if(ok && !dialog->d->keepOpen->isChecked())
+          if(ok && !dialog->d->shouldKeepOpen())
             dialog->reject();
           else
             showCloseButton();

@@ -27,6 +27,9 @@ public:
   void addWidgetLefOfButtons(QWidget* widget);
 
   //################################################################################################
+  void disableKeepOpen();
+
+  //################################################################################################
   static bool exec(const std::function<bool()>& poll,
                    const QString& windowTitle,
                    QWidget* parent,
