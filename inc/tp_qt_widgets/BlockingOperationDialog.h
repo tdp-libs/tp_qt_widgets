@@ -24,7 +24,7 @@ public:
   ~BlockingOperationDialog() override;
 
   //################################################################################################
-  void addWidgetLefOfButtons(QWidget* widget);
+  void addWidgetLeftOfButtons(QWidget* widget);
 
   //################################################################################################
   void disableKeepOpen();

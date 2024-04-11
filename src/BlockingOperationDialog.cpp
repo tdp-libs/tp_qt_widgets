@@ -136,7 +136,7 @@ BlockingOperationDialog::~BlockingOperationDialog()
 }
 
 //##################################################################################################
-void BlockingOperationDialog::addWidgetLefOfButtons(QWidget* widget)
+void BlockingOperationDialog::addWidgetLeftOfButtons(QWidget* widget)
 {
   d->buttonLayout->insertWidget(d->buttonLayout->count()-1, widget);
 }

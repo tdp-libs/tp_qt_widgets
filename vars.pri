@@ -6,9 +6,6 @@ DEFINES += TP_QT_WIDGETS_LIBRARY
 SOURCES += src/Utils.cpp
 HEADERS += inc/tp_qt_widgets/Utils.h
 
-SOURCES += src/FontUtils.cpp
-HEADERS += inc/tp_qt_widgets/FontUtils.h
-
 SOURCES += src/PainterUtils.cpp
 HEADERS += inc/tp_qt_widgets/PainterUtils.h
 
