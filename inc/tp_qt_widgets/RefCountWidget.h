@@ -16,6 +16,7 @@ This widget displays the instance counts of all the types that inplement instanc
 class TP_QT_WIDGETS_SHARED_EXPORT RefCountWidget: public QWidget
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   //! Construct a ref count widget.
@@ -28,16 +29,10 @@ public:
   //! Destructor.
   ~RefCountWidget();
 
-
 protected:
   //################################################################################################
   //! The widget is updated by a timer.
   virtual void timerEvent(QTimerEvent* event);
-
-private:
-  struct Private;
-  Private* d;
-  friend struct Private;
 };
 
 }

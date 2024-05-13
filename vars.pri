@@ -39,6 +39,9 @@ HEADERS += inc/tp_qt_widgets/detail/ColorPicker_RGBSlider.h
 SOURCES += src/ColorPickerDialog.cpp
 HEADERS += inc/tp_qt_widgets/ColorPickerDialog.h
 
+SOURCES += src/ColorButton.cpp
+HEADERS += inc/tp_qt_widgets/ColorButton.h
+
 SOURCES += src/DebugWidget.cpp
 HEADERS += inc/tp_qt_widgets/DebugWidget.h
 

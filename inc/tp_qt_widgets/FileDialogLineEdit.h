@@ -17,6 +17,7 @@ namespace tp_qt_widgets
 class TP_QT_WIDGETS_SHARED_EXPORT FileDialogLineEdit: public QWidget
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   FileDialogLineEdit(QWidget* parent = nullptr);
@@ -55,11 +56,6 @@ public:
 Q_SIGNALS:
   //################################################################################################
   void selectionChanged();
-
-private:
-  struct Private;
-  Private* d;
-  friend struct Private;
 };
 
 }

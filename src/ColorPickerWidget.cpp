@@ -67,12 +67,7 @@ void ColorPickerWidget::setColor(const QColor& color)
 //##################################################################################################
 void ColorPickerWidget::setColor(TPPixel color)
 {
-  QColor c;
-  c.setRed  (color.r);
-  c.setGreen(color.g);
-  c.setBlue (color.b);
-  c.setAlpha(color.a);
-  d->colorPicker->set(c);
+  d->colorPicker->set(tpPixelToQColor(color));
 }
 
 //##################################################################################################
@@ -84,15 +79,7 @@ QColor ColorPickerWidget::qColor() const
 //##################################################################################################
 TPPixel ColorPickerWidget::tpPixel() const
 {
-  TPPixel color;
-  {
-    auto c = d->colorPicker->get();
-    color.r = c.red  ();
-    color.g = c.green();
-    color.b = c.blue ();
-    color.a = c.alpha();
-  }
-  return color;
+  return tpPixelFromQColor(d->colorPicker->get());
 }
 
 }

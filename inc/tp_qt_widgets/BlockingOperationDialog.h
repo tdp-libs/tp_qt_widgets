@@ -14,6 +14,7 @@ namespace tp_qt_widgets
 class BlockingOperationDialog : public QDialog
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   BlockingOperationDialog(const std::function<bool()>& poll,
@@ -35,12 +36,6 @@ public:
                    QWidget* parent,
                    const std::function<bool(tp_utils::Progress*)>& closure);
 
-//  //################################################################################################
-//  static bool exec(const std::function<bool()>& poll,
-//                   const QString& windowTitle,
-//                   QWidget* parent,
-//                   const std::function<bool(QWidget* parent, tp_utils::Progress*)>& closure);
-
   //################################################################################################
   static bool exec(const std::function<bool()>& poll,
                    const QString& windowTitle,
@@ -53,11 +48,6 @@ protected:
 
   //################################################################################################
   void closeEvent(QCloseEvent *) override;
-
-private:
-  struct Private;
-  friend struct Private;
-  Private* d;
 };
 
 }

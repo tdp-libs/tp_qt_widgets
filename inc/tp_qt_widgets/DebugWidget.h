@@ -13,17 +13,13 @@ namespace tp_qt_widgets
 class TP_QT_WIDGETS_SHARED_EXPORT DebugWidget: public QPlainTextEdit
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   DebugWidget(QWidget* parent=nullptr);
 
   //################################################################################################
   ~DebugWidget() override;
-
-private:
-  struct Private;
-  friend struct Private;
-  Private* d;
 };
 
 }

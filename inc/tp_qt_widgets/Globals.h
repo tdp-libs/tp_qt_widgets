@@ -3,6 +3,8 @@
 
 #include "tp_qt_utils/Globals.h" // IWYU pragma: keep
 
+#include "tp_utils/TPPixel.h"
+
 #include <QtCore/qglobal.h>
 #include <QObject>  // IWYU pragma: keep
 
@@ -60,6 +62,12 @@ protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
 };
 #endif
+
+//##################################################################################################
+TPPixel tpPixelFromQColor(const QColor& color);
+
+//##################################################################################################
+QColor tpPixelToQColor(const TPPixel& color);
 
 }
 

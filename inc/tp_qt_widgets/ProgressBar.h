@@ -21,17 +21,13 @@ This is a progress bar that automatically updates when the tp_utils::Progress cl
 class TP_QT_WIDGETS_SHARED_EXPORT ProgressBar: public QProgressBar
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   ProgressBar(tp_utils::Progress* progress, QWidget* parent=nullptr);
 
   //################################################################################################
   ~ProgressBar() override;
-
-private:
-  struct Private;
-  Private* d;
-  friend struct Private;
 };
 
 }

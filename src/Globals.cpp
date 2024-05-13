@@ -112,4 +112,28 @@ bool ClassNameToolTips::eventFilter(QObject *obj, QEvent *event)
 }
 #endif
 
+
+
+//##################################################################################################
+TPPixel tpPixelFromQColor(const QColor& color)
+{
+  TPPixel result;
+  result.r = color.red  ();
+  result.g = color.green();
+  result.b = color.blue ();
+  result.a = color.alpha();
+  return result;
+}
+
+//##################################################################################################
+QColor tpPixelToQColor(const TPPixel& color)
+{
+  QColor result;
+  result.setRed  (color.r);
+  result.setGreen(color.g);
+  result.setBlue (color.b);
+  result.setAlpha(color.a);
+  return result;
+}
+
 }

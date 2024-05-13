@@ -1,35 +1,29 @@
-#ifndef tp_qt_widgets_ColorPickerWidget_h
-#define tp_qt_widgets_ColorPickerWidget_h
+#ifndef tp_qt_widgets_ColorButton_h
+#define tp_qt_widgets_ColorButton_h
 
-#include "tp_qt_widgets/Globals.h"
+#include "tp_qt_widgets/ColorPickerWidget.h"
 
 #include "tp_utils/TPPixel.h"
 
-#include <QWidget>
+#include <QPushButton>
 
 namespace tp_qt_widgets
 {
 
 //##################################################################################################
 //! A color picker
-class TP_QT_WIDGETS_SHARED_EXPORT ColorPickerWidget: public QWidget
+class TP_QT_WIDGETS_SHARED_EXPORT ColorButton: public QPushButton
 {
   Q_OBJECT
   TP_DQ;
 public:
-
-  enum class Mode
-  {
-    HSVCircle,
-    HSVSquare,
-    RGBSlider
-  };
+  //################################################################################################
+  ColorButton(const QString& text,
+              ColorPickerWidget::Mode mode=ColorPickerWidget::Mode::RGBSlider,
+              QWidget* parent=nullptr);
 
   //################################################################################################
-  ColorPickerWidget(Mode mode=Mode::RGBSlider, QWidget* parent=nullptr);
-
-  //################################################################################################
-  ~ColorPickerWidget() override;
+  ~ColorButton() override;
 
   //################################################################################################
   void setColor(const QColor& color);
@@ -59,7 +53,7 @@ public:
   }
 
   //################################################################################################
-  Q_SIGNAL void colorChanged();
+  tp_utils::CallbackCollection<void()> edited;
 };
 
 }

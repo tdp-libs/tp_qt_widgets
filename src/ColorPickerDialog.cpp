@@ -21,14 +21,14 @@ struct ColorPickerDialog::Private
 };
 
 //##################################################################################################
-ColorPickerDialog::ColorPickerDialog(QDialog* parent):
+ColorPickerDialog::ColorPickerDialog(ColorPickerWidget::Mode mode, QWidget* parent):
   QDialog(parent),
   d(new Private())
 {
   auto l = new QVBoxLayout(this);
   l->setContentsMargins(4,9,4,9);
 
-  d->colorPickerWidget = new ColorPickerWidget();
+  d->colorPickerWidget = new ColorPickerWidget(mode);
   l->addWidget(d->colorPickerWidget);
 
   auto buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
@@ -69,9 +69,12 @@ TPPixel ColorPickerDialog::tpPixel() const
 }
 
 //##################################################################################################
-QColor ColorPickerDialog::getColor(const QColor& color, const QString& title, QDialog* parent)
+QColor ColorPickerDialog::getColor(const QColor& color,
+                                   const QString& title,
+                                   ColorPickerWidget::Mode mode,
+                                   QWidget* parent)
 {
-  QPointer<ColorPickerDialog> dialog = new ColorPickerDialog(parent);
+  QPointer<ColorPickerDialog> dialog = new ColorPickerDialog(mode, parent);
   TP_CLEANUP([&]{delete dialog;});
 
   dialog->setWindowTitle(title);
@@ -85,9 +88,12 @@ QColor ColorPickerDialog::getColor(const QColor& color, const QString& title, QD
 }
 
 //##################################################################################################
-TPPixel ColorPickerDialog::getColor(const TPPixel& color, const QString& title, QDialog* parent)
+TPPixel ColorPickerDialog::getColor(const TPPixel& color,
+                                    const QString& title,
+                                    ColorPickerWidget::Mode mode,
+                                    QWidget* parent)
 {
-  QPointer<ColorPickerDialog> dialog = new ColorPickerDialog(parent);
+  QPointer<ColorPickerDialog> dialog = new ColorPickerDialog(mode, parent);
   TP_CLEANUP([&]{delete dialog;});
 
   dialog->setWindowTitle(title);

@@ -18,6 +18,7 @@ enum class StackButtonStyle
 class TP_QT_WIDGETS_SHARED_EXPORT ExclusiveCollapsibleStack: public QWidget
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   ExclusiveCollapsibleStack(StackButtonStyle buttonStyle, QWidget* parent=nullptr);
@@ -58,11 +59,6 @@ protected:
 
   //################################################################################################
    void showEvent(QShowEvent* event) override;
-
-private:
-  struct Private;
-  Private* d;
-  friend struct Private;
 };
 
 }

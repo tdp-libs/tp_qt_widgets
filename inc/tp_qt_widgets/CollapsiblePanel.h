@@ -12,6 +12,7 @@ namespace tp_qt_widgets
 class TP_QT_WIDGETS_SHARED_EXPORT CollapsiblePanel: public QWidget
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   CollapsiblePanel(QWidget* parent=nullptr);
@@ -46,11 +47,6 @@ protected:
 
   //################################################################################################
   bool eventFilter(QObject* watched, QEvent* event) override;
-
-private:
-  struct Private;
-  Private* d;
-  friend struct Private;
 };
 
 }
