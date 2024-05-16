@@ -133,7 +133,10 @@ size_t ExclusiveCollapsibleStack::insertPage(size_t index, const QString& title,
   if(expand || d->pages.size() == 1)
     expandPage(index);
   else
+  {
+    page.panel->collapseNow();
     d->updatePanels();
+  }
 
   connect(page.panel, &tp_qt_widgets::CollapsiblePanel::expansionFactorChanged, this, [&]
   {

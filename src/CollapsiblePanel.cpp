@@ -139,6 +139,15 @@ void CollapsiblePanel::collapse()
 }
 
 //##################################################################################################
+void CollapsiblePanel::collapseNow()
+{
+  d->expanded = false;
+  setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+  d->f = 0.0f;
+  recalculateGeometry();
+}
+
+//##################################################################################################
 float CollapsiblePanel::expansionFactor() const
 {
   return d->f;
