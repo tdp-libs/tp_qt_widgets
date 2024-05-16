@@ -16,6 +16,7 @@ namespace detail
 class TP_QT_WIDGETS_SHARED_EXPORT ColorPicker_HSVSquare: public ColorPicker
 {
   Q_OBJECT
+  TP_DQ;
 public:
   //################################################################################################
   ColorPicker_HSVSquare(QWidget* parent=nullptr);
@@ -41,11 +42,6 @@ protected:
 
     //##############################################################################################
     void mouseReleaseEvent(QMouseEvent* event) override;
-
-private:
-  struct Private;
-  Private* d;
-  friend struct Private;
 };
 
 }
