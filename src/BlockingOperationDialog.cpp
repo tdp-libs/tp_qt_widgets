@@ -26,7 +26,6 @@ struct BlockingOperationDialog::Private
   bool ok=false;
   bool allowClose=false;
 
-  //QPlainTextEdit* messages{nullptr};
   QTextEdit* messages{nullptr};
   tp_qt_widgets::ProgressBar* progressBar{nullptr};
   QCheckBox* keepOpen{nullptr};
@@ -165,7 +164,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
 {
   QPointer<BlockingOperationDialog> dialog = new BlockingOperationDialog(poll, windowTitle, parent);
   TP_CLEANUP([&]{delete dialog;});
-  dialog->setFixedSize(600, 480);
+  dialog->resize(1024, 768);
 
   auto timer = new QTimer(dialog);
   timer->setSingleShot(true);
