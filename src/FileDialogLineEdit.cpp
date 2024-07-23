@@ -128,7 +128,11 @@ void FileDialogLineEdit::setQSettingsPath(const QString& qSettingsPath)
 {
   d->qSettingsPath = qSettingsPath;
   if(!d->qSettingsPath.isEmpty())
+  {
     d->initialDirectory = QSettings().value(d->qSettingsPath, d->initialDirectory).toString();
+    if(d->mode == FileDialogLineEdit::Mode::DirectoryMode)
+      d->lineEdit->setText(d->initialDirectory);
+  }
 }
 
 
