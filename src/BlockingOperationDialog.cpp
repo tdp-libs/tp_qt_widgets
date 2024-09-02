@@ -61,16 +61,24 @@ struct BlockingOperationDialog::Private
 
       messages->clear();
       std::string text;
-      for(const auto& message : progress.allMessages())
+
       {
-        size_t iMax = message.indentation*4;
-        for(size_t i=0; i<iMax; i++)
-        text += "&nbsp;";
-        if(message.error)
-          text += "<font color=#8b0000><b>" + message.message + "</b></font>";
-        else
-          text += message.message;
-        text += "<br>";
+        const auto& messages = progress.allMessages();
+        size_t maxRows = 500;
+        size_t iMax = messages.size();
+        size_t iFirst = (iMax>maxRows)?(iMax-maxRows):0;
+        for(size_t i=iFirst; i<iMax; i++)
+        {
+          const auto& message = messages.at(i);
+          size_t iMax = message.indentation*4;
+          for(size_t i=0; i<iMax; i++)
+            text += "&nbsp;";
+          if(message.error)
+            text += "<font color=#8b0000><b>" + message.message + "</b></font>";
+          else
+            text += message.message;
+          text += "<br>";
+        }
       }
 
       messages->setHtml(QString::fromStdString(text));
