@@ -51,7 +51,7 @@ public:
   void setFilter(const QString& filter);
 
   //################################################################################################
-  void setQSettingsPath(const QString& qSettingsPath);
+  void setQSettingsPath(const std::string& qSettingsPath);
 
 Q_SIGNALS:
   //################################################################################################

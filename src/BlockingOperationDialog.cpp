@@ -1,6 +1,8 @@
 #include "tp_qt_widgets/BlockingOperationDialog.h"
 #include "tp_qt_widgets/ProgressBar.h"
 
+#include "tp_utils/TPSettings.h"
+
 #include <QPointer>
 #include <QBoxLayout>
 #include <QPlainTextEdit>
@@ -12,7 +14,6 @@
 #include <QLabel>
 #include <QMessageBox>
 #include <QCheckBox>
-#include <QSettings>
 
 namespace tp_qt_widgets
 {
@@ -118,7 +119,7 @@ BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& po
   d->messages->setWordWrapMode(QTextOption::NoWrap);
 
   d->keepOpen = new QCheckBox("Keep open");
-  d->keepOpen->setChecked(QSettings().value("BlockingOperationDialog_keepOpen").toBool());
+  d->keepOpen->setChecked(TPSettings::value("BlockingOperationDialog_keepOpen")=="true");
   l->addWidget(d->keepOpen);
 
   d->buttonLayout = new QHBoxLayout();
@@ -138,7 +139,7 @@ BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& po
 //##################################################################################################
 BlockingOperationDialog::~BlockingOperationDialog()
 {
-  QSettings().setValue("BlockingOperationDialog_keepOpen", d->keepOpen->isChecked());
+  TPSettings::setValue("BlockingOperationDialog_keepOpen", d->keepOpen->isChecked()?"true":"false");
   delete d;
 }
 

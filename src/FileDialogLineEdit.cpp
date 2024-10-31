@@ -1,11 +1,11 @@
 #include "tp_qt_widgets/FileDialogLineEdit.h"
 
 #include "tp_utils/RefCount.h"
+#include "tp_utils/TPSettings.h"
 
 #include <QLineEdit>
 #include <QPushButton>
 #include <QVBoxLayout>
-#include <QSettings>
 
 namespace tp_qt_widgets
 {
@@ -24,7 +24,7 @@ struct FileDialogLineEdit::Private
   QString filter;
   FileDialogLineEdit::Mode mode{FileDialogLineEdit::DirectoryMode};
 
-  QString qSettingsPath;
+  std::string qSettingsPath;
 
   //################################################################################################
   Private(FileDialogLineEdit* q_):
@@ -77,8 +77,8 @@ FileDialogLineEdit::FileDialogLineEdit(QWidget* parent):
     {
       d->lineEdit->setText(str);
 
-      if(!d->qSettingsPath.isEmpty())
-        QSettings().setValue(d->qSettingsPath, d->dir());
+      if(!d->qSettingsPath.empty())
+        TPSettings::setValue(d->qSettingsPath, d->dir().toStdString());
 
       Q_EMIT d->q->selectionChanged();
     }
@@ -124,12 +124,12 @@ void FileDialogLineEdit::setFilter(const QString& filter)
 }
 
 //##################################################################################################
-void FileDialogLineEdit::setQSettingsPath(const QString& qSettingsPath)
+void FileDialogLineEdit::setQSettingsPath(const std::string& qSettingsPath)
 {
   d->qSettingsPath = qSettingsPath;
-  if(!d->qSettingsPath.isEmpty())
+  if(!d->qSettingsPath.empty())
   {
-    d->initialDirectory = QSettings().value(d->qSettingsPath, d->initialDirectory).toString();
+    d->initialDirectory = QString::fromStdString(TPSettings::value(d->qSettingsPath));
     if(d->mode == FileDialogLineEdit::Mode::DirectoryMode)
       d->lineEdit->setText(d->initialDirectory);
   }
