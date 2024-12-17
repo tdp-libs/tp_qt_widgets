@@ -17,13 +17,14 @@ struct RefCountWidget::Private
   TP_REF_COUNT_OBJECTS("tp_qt_widgets::RefCountWidget::Private");
   TP_NONCOPYABLE(Private);
 
-  RefCountWidget* q;
+  Q* q;
 
   int timerID;
 
   QTableWidget* table;
 
-  Private(RefCountWidget* q_):
+  //################################################################################################
+  Private(Q* q_):
     q(q_),
     timerID(0),
     table(nullptr)

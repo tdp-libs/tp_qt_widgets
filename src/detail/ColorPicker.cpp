@@ -16,6 +16,12 @@ ColorPicker::ColorPicker(QWidget* parent):
 }
 
 //##################################################################################################
+int ColorPicker::targetHeight() const
+{
+  return 0;
+}
+
+//##################################################################################################
 bool ColorPicker::bestContrastIsBlack()
 {
   auto c = get();

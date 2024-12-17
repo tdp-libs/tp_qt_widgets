@@ -11,7 +11,7 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct CollapsiblePanel::Private
 {
-  CollapsiblePanel* q;
+  Q* q;
   QScrollArea* contentArea{nullptr};
 
   QVariantAnimation* contentAnimation{nullptr};
@@ -21,7 +21,7 @@ struct CollapsiblePanel::Private
   bool expanded{true};
 
   //################################################################################################
-  Private(CollapsiblePanel* q_):
+  Private(Q* q_):
     q(q_)
   {
 

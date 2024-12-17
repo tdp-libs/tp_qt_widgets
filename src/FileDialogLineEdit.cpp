@@ -15,7 +15,7 @@ struct FileDialogLineEdit::Private
   TP_REF_COUNT_OBJECTS("tp_qt_widgets::FileDialogLineEdit::Private");
   TP_NONCOPYABLE(Private);
 
-  FileDialogLineEdit* q;
+  Q* q;
 
   QLineEdit* lineEdit{nullptr};
   QPushButton* pushButton{nullptr};
@@ -27,7 +27,7 @@ struct FileDialogLineEdit::Private
   std::string qSettingsPath;
 
   //################################################################################################
-  Private(FileDialogLineEdit* q_):
+  Private(Q* q_):
     q(q_)
   {
 

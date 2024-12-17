@@ -91,12 +91,12 @@ struct Geometry_lt
 //##################################################################################################
 struct ColorPicker_RGBSlider::Private
 {
-  ColorPicker_RGBSlider* q;
+  Q* q;
   QColor color;
   char interaction{0};
 
   //################################################################################################
-  Private(ColorPicker_RGBSlider* q_):
+  Private(Q* q_):
     q(q_)
   {
 
@@ -181,7 +181,7 @@ void ColorPicker_RGBSlider::paintEvent(QPaintEvent *event)
     double f = getComponentF(component);
     QRect r = geometry.sliderRect(component);
 
-    QLinearGradient gradient(0,r.height(),0,0);
+    QLinearGradient gradient(0,r.bottom(),0,r.top());
     gradient.setColorAt(1.0, color(255));
     gradient.setColorAt(f  , d->color  );
     gradient.setColorAt(0.0, color(0  ));

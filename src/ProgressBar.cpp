@@ -11,11 +11,11 @@ struct ProgressBar::Private
 {
   TP_REF_COUNT_OBJECTS("tp_qt_widgets::ProgressBar::Private");
   TP_NONCOPYABLE(Private);
-  ProgressBar* q;
+  Q* q;
   tp_utils::Progress* progress;
 
   //################################################################################################
-  Private(ProgressBar* q_, tp_utils::Progress* progress_):
+  Private(Q* q_, tp_utils::Progress* progress_):
     q(q_),
     progress(progress_)
   {

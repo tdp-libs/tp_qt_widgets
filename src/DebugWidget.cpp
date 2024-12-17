@@ -11,13 +11,13 @@ namespace tp_qt_widgets
 //##################################################################################################
 struct DebugWidget::Private
 {
-  DebugWidget* q;
+  Q* q;
 
   TPMutex mutex{TPM};
   std::string messages;
 
   //################################################################################################
-  Private(DebugWidget* q_):
+  Private(Q* q_):
     q(q_)
   {
     // This is not thread safe but we get away with it most of the time...

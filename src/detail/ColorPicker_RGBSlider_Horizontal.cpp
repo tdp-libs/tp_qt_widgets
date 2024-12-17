@@ -1,4 +1,4 @@
-#include "tp_qt_widgets/detail/ColorPicker_HSVSquare.h"
+#include "tp_qt_widgets/detail/ColorPicker_RGBSlider_Horizontal.h"
 
 #include <QPainter>
 #include <QMouseEvent>
@@ -20,19 +20,17 @@ struct Geometry_lt
   int sliderPadding;
   int margin;
   int previewWidth;
-  int combindedWidth;
   int paddingLeft;
 
   //################################################################################################
-  Geometry_lt(ColorPicker_HSVSquare* q):
+  Geometry_lt(const ColorPicker_RGBSlider_Horizontal* q):
     width(q->width()),
     height(q->height()),
     sliderWidth(20),
     sliderPadding(5),
     margin(9),
     previewWidth(height-(margin*2)),
-    combindedWidth((sliderWidth*3) + previewWidth),
-    paddingLeft((width - combindedWidth) / 2)
+    paddingLeft(margin)
   {
 
   }
@@ -42,7 +40,9 @@ struct Geometry_lt
   {
     switch(component)
     {
-    case 'h': return 0;
+    case 'r': return 0;
+    case 'g': return 1;
+    case 'b': return 2;
     }
     return 0;
   }
@@ -51,17 +51,21 @@ struct Geometry_lt
   QRect sliderRect(char component)
   {
     int i=sliderIndex(component);
-    int left = paddingLeft + (i*sliderWidth) + sliderPadding;
-    return QRect(left, margin, sliderWidth-(2*sliderPadding), height-(margin*2));
+    int left = paddingLeft + previewWidth + sliderPadding + margin;
+    int top = margin + (i*sliderWidth) + sliderPadding;
+
+    int cWidth = width - (left + margin);
+    int cHeight = sliderWidth-(2*sliderPadding);
+
+    return QRect(left, top, cWidth, cHeight);
   }
 
   //################################################################################################
   QPointF sliderHandleCenter(char component, double f)
   {
-    f = 1.0 - f;
     auto r = sliderRect(component);
-    double x = double(r.left()) + (double(r.width()) / 2.0);
-    double y = double(r.top()) + (double(r.height()) * f);
+    double x = double(r.left()) + (double(r.width()) * f);
+    double y = double(r.top()) + (double(r.height()) / 2.0);
     return QPointF(x, y);
   }
 
@@ -71,7 +75,7 @@ struct Geometry_lt
     int i=sliderIndex(component);
     f = 1.0 - f;
 
-    int left = paddingLeft + (i*sliderWidth);
+    int left = paddingLeft + previewWidth + sliderPadding + (i*sliderWidth);
     double y = double(margin) + (double(height-(margin*2)) * f);
     double sliderRadius = double(sliderWidth) / 2.0;
     return QRect(left, int(y-sliderRadius), sliderWidth, sliderWidth);
@@ -80,17 +84,17 @@ struct Geometry_lt
   //################################################################################################
   QRect prevewRect()
   {
-    int left = paddingLeft + sliderWidth + sliderPadding ;
+    int left = paddingLeft;
     return QRect(left, margin, previewWidth, height-(margin*2));
   }
 };
 }
 
 //##################################################################################################
-struct ColorPicker_HSVSquare::Private
+struct ColorPicker_RGBSlider_Horizontal::Private
 {
   Q* q;
-  QColor color{Qt::gray};
+  QColor color;
   char interaction{0};
 
   //################################################################################################
@@ -106,18 +110,12 @@ struct ColorPicker_HSVSquare::Private
     QColor c = color;
     Geometry_lt geometry(q);
 
-    if(interaction == 'h')
-    {
-      QRect r = geometry.sliderRect(interaction);
+    QRect r = geometry.sliderRect(interaction);
+    float v = std::clamp(double(pos.x() - r.x()) / double(r.width()), 0.0, 1.0);
 
-      int h;
-      int s;
-      int v;
-      int a;
-      color.getHsv(&h, &s, &v, &a);
-      h = 1.0 - std::clamp(double(pos.y() - r.y()) / double(r.height()), 0.0, 1.0);
-      color.setHsv(h, s, v);
-    }
+    if     (interaction == 'r') color.setRedF  (v);
+    else if(interaction == 'g') color.setGreenF(v);
+    else if(interaction == 'b') color.setBlueF (v);
 
     if(c!=color)
     {
@@ -128,7 +126,7 @@ struct ColorPicker_HSVSquare::Private
 };
 
 //##################################################################################################
-ColorPicker_HSVSquare::ColorPicker_HSVSquare(QWidget* parent):
+ColorPicker_RGBSlider_Horizontal::ColorPicker_RGBSlider_Horizontal(QWidget* parent):
   ColorPicker(parent),
   d(new Private(this))
 {
@@ -136,26 +134,33 @@ ColorPicker_HSVSquare::ColorPicker_HSVSquare(QWidget* parent):
 }
 
 //##################################################################################################
-ColorPicker_HSVSquare::~ColorPicker_HSVSquare()
+ColorPicker_RGBSlider_Horizontal::~ColorPicker_RGBSlider_Horizontal()
 {
   delete d;
 }
 
 //##################################################################################################
-void ColorPicker_HSVSquare::set(const QColor& color)
+void ColorPicker_RGBSlider_Horizontal::set(const QColor& color)
 {
   d->color = color;
   update();
 }
 
 //##################################################################################################
-QColor ColorPicker_HSVSquare::get() const
+QColor ColorPicker_RGBSlider_Horizontal::get() const
 {
   return d->color;
 }
 
 //##################################################################################################
-void ColorPicker_HSVSquare::paintEvent(QPaintEvent *event)
+int ColorPicker_RGBSlider_Horizontal::targetHeight() const
+{
+  Geometry_lt geometry(this);
+  return (2*geometry.margin) + (3*geometry.sliderWidth);
+}
+
+//##################################################################################################
+void ColorPicker_RGBSlider_Horizontal::paintEvent(QPaintEvent *event)
 {
   ColorPicker::paintEvent(event);
 
@@ -170,16 +175,28 @@ void ColorPicker_HSVSquare::paintEvent(QPaintEvent *event)
 
   auto drawSlider = [&](char component)
   {
+    auto color = [&](uint8_t v)
+    {
+      QColor c = d->color;
+      switch(component)
+      {
+      case 'r': c.setRed  (v); break;
+      case 'g': c.setGreen(v); break;
+      case 'b': c.setBlue (v); break;
+      }
+      return c;
+    };
+
     double f = getComponentF(component);
     QRect r = geometry.sliderRect(component);
 
-    QLinearGradient gradient(0,r.height(),0,0);
-    gradient.setColorAt(1.0, Qt::red);
-    gradient.setColorAt(f  , Qt::green);
-    gradient.setColorAt(0.0, Qt::blue);
+    QLinearGradient gradient(r.left(),0,r.right(),0);
+    gradient.setColorAt(1.0, color(255));
+    gradient.setColorAt(f  , d->color  );
+    gradient.setColorAt(0.0, color(0  ));
 
     {
-      double radius = double(r.width())/2.0;
+      double radius = double(r.height())/2.0;
       painter.save();
       painter.setBrush(gradient);
       painter.drawRoundedRect(r, radius, radius);
@@ -196,14 +213,16 @@ void ColorPicker_HSVSquare::paintEvent(QPaintEvent *event)
     painter.restore();
   };
 
-  drawSlider('h');
+  drawSlider('r');
+  drawSlider('g');
+  drawSlider('b');
 
   painter.setBrush(d->color);
   painter.drawRoundedRect(geometry.prevewRect(), 5.0, 5.0);
 }
 
 //##################################################################################################
-void ColorPicker_HSVSquare::mouseMoveEvent(QMouseEvent* event)
+void ColorPicker_RGBSlider_Horizontal::mouseMoveEvent(QMouseEvent* event)
 {
   if(d->interaction)
     event->accept();
@@ -212,7 +231,7 @@ void ColorPicker_HSVSquare::mouseMoveEvent(QMouseEvent* event)
 }
 
 //##################################################################################################
-void ColorPicker_HSVSquare::mousePressEvent(QMouseEvent* event)
+void ColorPicker_RGBSlider_Horizontal::mousePressEvent(QMouseEvent* event)
 {
   Geometry_lt geometry(this);
 
@@ -223,8 +242,10 @@ void ColorPicker_HSVSquare::mousePressEvent(QMouseEvent* event)
         geometry.sliderHandleRect(component, getComponentF(component)).contains(event->pos());
   };
 
-  if(collision('h'))d->interaction = 'h';
-  else              d->interaction = 0;
+  if     (collision('r'))d->interaction = 'r';
+  else if(collision('g'))d->interaction = 'g';
+  else if(collision('b'))d->interaction = 'b';
+  else                 d->interaction = 0;
 
   if(d->interaction)
     event->accept();
@@ -233,7 +254,7 @@ void ColorPicker_HSVSquare::mousePressEvent(QMouseEvent* event)
 }
 
 //##################################################################################################
-void ColorPicker_HSVSquare::mouseReleaseEvent(QMouseEvent* event)
+void ColorPicker_RGBSlider_Horizontal::mouseReleaseEvent(QMouseEvent* event)
 {
   if(d->interaction)
     event->accept();

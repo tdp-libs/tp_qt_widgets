@@ -2,6 +2,7 @@
 #include "tp_qt_widgets/detail/ColorPicker_HSVCircle.h"
 #include "tp_qt_widgets/detail/ColorPicker_HSVSquare.h"
 #include "tp_qt_widgets/detail/ColorPicker_RGBSlider.h"
+#include "tp_qt_widgets/detail/ColorPicker_RGBSlider_Horizontal.h"
 
 #include "tp_utils/RefCount.h"
 
@@ -21,12 +22,12 @@ struct ColorPickerWidget::Private
   TP_REF_COUNT_OBJECTS("tp_qt_widgets::ColorPickerWidget::Private");
   TP_NONCOPYABLE(Private);
 
-  ColorPickerWidget* q;
+  Q* q;
 
   detail::ColorPicker* colorPicker;
 
   //################################################################################################
-  Private(ColorPickerWidget* q_):
+  Private(Q* q_):
     q(q_)
   {
 
@@ -43,9 +44,10 @@ ColorPickerWidget::ColorPickerWidget(Mode mode, QWidget* parent):
 
   switch(mode)
   {
-  case Mode::HSVCircle: d->colorPicker = new detail::ColorPicker_HSVCircle(); break;
-  case Mode::HSVSquare: d->colorPicker = new detail::ColorPicker_HSVSquare(); break;
-  case Mode::RGBSlider: d->colorPicker = new detail::ColorPicker_RGBSlider(); break;
+  case Mode::HSVCircle          : d->colorPicker = new detail::ColorPicker_HSVCircle(); break;
+  case Mode::HSVSquare          : d->colorPicker = new detail::ColorPicker_HSVSquare(); break;
+  case Mode::RGBSlider          : d->colorPicker = new detail::ColorPicker_RGBSlider(); break;
+  case Mode::RGBSliderHorizontal: d->colorPicker = new detail::ColorPicker_RGBSlider_Horizontal(); break;
   }
 
   l->addWidget(d->colorPicker);
@@ -80,6 +82,12 @@ QColor ColorPickerWidget::qColor() const
 TPPixel ColorPickerWidget::tpPixel() const
 {
   return tpPixelFromQColor(d->colorPicker->get());
+}
+
+//##################################################################################################
+int ColorPickerWidget::targetHeight() const
+{
+  return d->colorPicker->targetHeight();
 }
 
 }

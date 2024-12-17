@@ -36,6 +36,9 @@ HEADERS += inc/tp_qt_widgets/detail/ColorPicker_HSVSquare.h
 SOURCES += src/detail/ColorPicker_RGBSlider.cpp
 HEADERS += inc/tp_qt_widgets/detail/ColorPicker_RGBSlider.h
 
+SOURCES += src/detail/ColorPicker_RGBSlider_Horizontal.cpp
+HEADERS += inc/tp_qt_widgets/detail/ColorPicker_RGBSlider_Horizontal.h
+
 SOURCES += src/ColorPickerDialog.cpp
 HEADERS += inc/tp_qt_widgets/ColorPickerDialog.h
 
