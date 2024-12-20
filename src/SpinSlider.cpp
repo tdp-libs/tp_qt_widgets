@@ -3,17 +3,91 @@
 #include <QDoubleSpinBox>
 #include <QSlider>
 #include <QBoxLayout>
+#include <QStyleOptionSlider>
+#include <QStyle>
+#include <QPainter>
 
 namespace tp_qt_widgets
 {
 
+namespace
+{
+//##################################################################################################
+class Slider_lt : public QSlider
+{
+public:
+  //################################################################################################
+  Slider_lt(Qt::Orientation orientation, QWidget* parent = nullptr):
+    QSlider(orientation, parent)
+  {
+
+  }
+
+  //################################################################################################
+  int positionForValue(int value)
+  {
+    QStyleOptionSlider opt;
+    initStyleOption(&opt);
+
+    int available = style()->pixelMetric(QStyle::PM_SliderSpaceAvailable, &opt, this);
+
+    int sLen = style()->pixelMetric(QStyle::PM_SliderLength, &opt, this) / 2;
+
+    int pos = style()->sliderPositionFromValue(minimum(),
+                                               maximum(),
+                                               value,
+                                               available);
+
+    return pos+sLen;
+  }
+
+  //################################################################################################
+  void paintEvent(QPaintEvent* event) override
+  {
+    QSlider::paintEvent(event);
+
+    if(softRangeSet)
+    {
+      QPainter painter(this);
+
+      painter.setPen(Qt::NoPen);
+
+      int oa=positionForValue(0);
+      int ob=positionForValue(softRangeMin);
+      int oc=positionForValue(softRangeMax);
+      int od=positionForValue(maximum());
+
+      painter.setBrush(QColor(255, 0, 0, 80));
+      painter.drawRect(QRect(oa, 0, ob-oa, height()));
+      painter.drawRect(QRect(oc, 0, od-oc, height()));
+
+      painter.setBrush(QColor(0, 255, 0, 80));
+      painter.drawRect(QRect(ob, 0, oc-ob, height()));
+    }
+  }
+
+  bool softRangeSet{false};
+  int softRangeMin{0};
+  int softRangeMax{0};
+};
+}
+
 //##################################################################################################
 struct SpinSlider::Private
 {
+  SliderMode mode;
+
   QDoubleSpinBox* spinBox{nullptr};
-  QSlider* slider{nullptr};
+  Slider_lt* slider{nullptr};
 
   bool inUpdateSpinBox{false};
+
+  //################################################################################################
+  Private(SliderMode mode_):
+    mode(mode_)
+  {
+
+  }
 
   //################################################################################################
   void updateSliderValue()
@@ -21,23 +95,46 @@ struct SpinSlider::Private
     if(inUpdateSpinBox)
       return;
 
-    slider->blockSignals(true);
-    TP_CLEANUP([&]{slider->blockSignals(false);});
+    QSignalBlocker b(slider);
+    slider->setValue(sliderValueFromSpinValue(spinBox->value()));
+  }
 
+  //################################################################################################
+  int sliderValueFromSpinValue(double value)
+  {
     double min = spinBox->minimum();
     double max = spinBox->maximum();
 
-    double value = spinBox->value();
-
     double f = (value-min) / (max-min);
+
+    if(mode == SliderMode::Exponential)
+    {
+      f = 1.0 - f;
+      f = f*f;
+      f = 1.0 - f;
+    }
+
     f = std::clamp(f, 0.0, 1.0);
 
     int sliderMax = slider->maximum();
 
     int v = int((f*double(sliderMax))+0.5);
-    v = std::clamp(v, 0, sliderMax);
+    return std::clamp(v, 0, sliderMax);
+  }
 
-    slider->setValue(v);
+  //################################################################################################
+  double sliderValueToSpinValue(int value)
+  {
+    double f = double(value) / double(slider->maximum());
+
+    if(mode == SliderMode::Exponential)
+      f = 1.0 - std::sqrt(1.0 - f);
+
+    double min = spinBox->minimum();
+    double max = spinBox->maximum();
+
+    double v = (f*(max-min))+min;
+    return std::clamp(v, min, max);
   }
 
   //################################################################################################
@@ -46,22 +143,15 @@ struct SpinSlider::Private
     inUpdateSpinBox = true;
     TP_CLEANUP([&]{inUpdateSpinBox = false;});
 
-    double f = double(slider->value()) / double(slider->maximum());
 
-    double min = spinBox->minimum();
-    double max = spinBox->maximum();
-
-    double v = (f*(max-min))+min;
-    v = std::clamp(v, min, max);
-
-    spinBox->setValue(v);
+    spinBox->setValue(sliderValueToSpinValue(slider->value()));
   }
 };
 
 //##################################################################################################
-SpinSlider::SpinSlider(QWidget* parent):
+SpinSlider::SpinSlider(SliderMode mode, QWidget* parent):
   QWidget(parent),
-  d(new Private())
+  d(new Private(mode))
 {
   auto l = new QHBoxLayout(this);
   l->setContentsMargins(0,0,0,0);
@@ -69,7 +159,7 @@ SpinSlider::SpinSlider(QWidget* parent):
   d->spinBox = new QDoubleSpinBox();
   l->addWidget(d->spinBox);
 
-  d->slider = new QSlider(Qt::Horizontal);
+  d->slider = new Slider_lt(Qt::Horizontal);
   l->addWidget(d->slider);
   d->slider->setRange(0, 100000);
 
@@ -110,6 +200,15 @@ float SpinSlider::minValue() const
 float SpinSlider::maxValue() const
 {
   return float(d->spinBox->maximum());
+}
+
+//##################################################################################################
+void SpinSlider::setSoftRange(float min, float max)
+{
+  d->slider->softRangeSet = true;
+  d->slider->softRangeMin = d->sliderValueFromSpinValue(double(min));
+  d->slider->softRangeMax = d->sliderValueFromSpinValue(double(max));
+  d->slider->update();
 }
 
 //##################################################################################################

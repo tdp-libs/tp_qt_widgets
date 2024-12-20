@@ -9,6 +9,13 @@ namespace tp_qt_widgets
 {
 
 //##################################################################################################
+enum class SliderMode
+{
+  Linear,
+  Exponential
+};
+
+//##################################################################################################
 //! A spind box and a slider.
 class TP_QT_WIDGETS_SHARED_EXPORT SpinSlider: public QWidget
 {
@@ -16,7 +23,7 @@ class TP_QT_WIDGETS_SHARED_EXPORT SpinSlider: public QWidget
   TP_DQ;
 public:
   //################################################################################################
-  SpinSlider(QWidget* parent=nullptr);
+  SpinSlider(SliderMode mode=SliderMode::Linear, QWidget* parent=nullptr);
 
   //################################################################################################
   ~SpinSlider() override;
@@ -29,6 +36,9 @@ public:
 
   //################################################################################################
   float maxValue() const;
+
+  //################################################################################################
+  void setSoftRange(float min, float max);
 
   //################################################################################################
   void setValue(float value);
