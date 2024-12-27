@@ -214,6 +214,7 @@ void SpinSlider::setSoftRange(float min, float max)
 //##################################################################################################
 void SpinSlider::setValue(float value)
 {
+  QSignalBlocker b(d->spinBox);
   d->spinBox->setValue(double(value));
   d->updateSliderValue();
 }
