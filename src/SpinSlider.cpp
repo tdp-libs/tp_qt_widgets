@@ -212,6 +212,18 @@ void SpinSlider::setSoftRange(float min, float max)
 }
 
 //##################################################################################################
+void SpinSlider::setDecimals(int decimals)
+{
+  d->spinBox->setDecimals(decimals);
+}
+
+//##################################################################################################
+int SpinSlider::decimals() const
+{
+  return d->spinBox->decimals();
+}
+
+//##################################################################################################
 void SpinSlider::setValue(float value)
 {
   QSignalBlocker b(d->spinBox);

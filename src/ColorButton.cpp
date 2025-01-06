@@ -39,7 +39,7 @@ ColorButton::ColorButton(const QString& text, ColorPickerWidget::Mode mode, QWid
   QPushButton(text, parent),
   d(new Private(this))
 {
-  setStyleSheet("text-align:left; padding-left:2;");
+  setStyleSheet("tp_qt_widgets--ColorButton{text-align:left; padding: 2px;}");
 
   connect(this, &QAbstractButton::clicked, this, [=]
   {

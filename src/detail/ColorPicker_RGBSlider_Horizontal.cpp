@@ -40,9 +40,9 @@ struct Geometry_lt
   {
     switch(component)
     {
-    case 'r': return 0;
-    case 'g': return 1;
-    case 'b': return 2;
+      case 'r': return 0;
+      case 'g': return 1;
+      case 'b': return 2;
     }
     return 0;
   }
@@ -72,11 +72,9 @@ struct Geometry_lt
   //################################################################################################
   QRect sliderHandleRect(char component, double f)
   {
-    int i=sliderIndex(component);
-    f = 1.0 - f;
-
-    int left = paddingLeft + previewWidth + sliderPadding + (i*sliderWidth);
-    double y = double(margin) + (double(height-(margin*2)) * f);
+    auto r = sliderRect(component);
+    int left = paddingLeft + previewWidth + sliderPadding + (double(r.width()) * f);
+    double y = double(r.top()) + (double(r.height()) / 2.0);
     double sliderRadius = double(sliderWidth) / 2.0;
     return QRect(left, int(y-sliderRadius), sliderWidth, sliderWidth);
   }
@@ -180,9 +178,9 @@ void ColorPicker_RGBSlider_Horizontal::paintEvent(QPaintEvent *event)
       QColor c = d->color;
       switch(component)
       {
-      case 'r': c.setRed  (v); break;
-      case 'g': c.setGreen(v); break;
-      case 'b': c.setBlue (v); break;
+        case 'r': c.setRed  (v); break;
+        case 'g': c.setGreen(v); break;
+        case 'b': c.setBlue (v); break;
       }
       return c;
     };
@@ -224,6 +222,9 @@ void ColorPicker_RGBSlider_Horizontal::paintEvent(QPaintEvent *event)
 //##################################################################################################
 void ColorPicker_RGBSlider_Horizontal::mouseMoveEvent(QMouseEvent* event)
 {
+  if(d->interaction == 0)
+    return ColorPicker::mouseMoveEvent(event);
+
   if(d->interaction)
     event->accept();
 
@@ -233,6 +234,9 @@ void ColorPicker_RGBSlider_Horizontal::mouseMoveEvent(QMouseEvent* event)
 //##################################################################################################
 void ColorPicker_RGBSlider_Horizontal::mousePressEvent(QMouseEvent* event)
 {
+  if(event->button() != Qt::LeftButton)
+    return ColorPicker::mousePressEvent(event);
+
   Geometry_lt geometry(this);
 
   auto collision = [&](char component)
@@ -245,7 +249,7 @@ void ColorPicker_RGBSlider_Horizontal::mousePressEvent(QMouseEvent* event)
   if     (collision('r'))d->interaction = 'r';
   else if(collision('g'))d->interaction = 'g';
   else if(collision('b'))d->interaction = 'b';
-  else                 d->interaction = 0;
+  else                   d->interaction = 0;
 
   if(d->interaction)
     event->accept();
@@ -256,6 +260,9 @@ void ColorPicker_RGBSlider_Horizontal::mousePressEvent(QMouseEvent* event)
 //##################################################################################################
 void ColorPicker_RGBSlider_Horizontal::mouseReleaseEvent(QMouseEvent* event)
 {
+  if(event->button() != Qt::LeftButton)
+    return ColorPicker::mouseReleaseEvent(event);
+
   if(d->interaction)
     event->accept();
 
