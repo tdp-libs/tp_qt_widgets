@@ -224,6 +224,18 @@ int SpinSlider::decimals() const
 }
 
 //##################################################################################################
+void SpinSlider::setSingleStep(float singleStep)
+{
+  d->spinBox->setSingleStep(double(singleStep));
+}
+
+//##################################################################################################
+float SpinSlider::singleStep() const
+{
+  return float(d->spinBox->singleStep());
+}
+
+//##################################################################################################
 void SpinSlider::setValue(float value)
 {
   QSignalBlocker b(d->spinBox);
