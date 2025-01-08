@@ -27,7 +27,7 @@ public:
   };
 
   //################################################################################################
-  ColorPickerWidget(Mode mode=Mode::RGBSlider, QWidget* parent=nullptr);
+  ColorPickerWidget(Mode mode=Mode::RGBSlider, bool editMenu=true, QWidget* parent=nullptr);
 
   //################################################################################################
   ~ColorPickerWidget() override;
@@ -64,7 +64,6 @@ public:
 
   //################################################################################################
   Q_SIGNAL void colorChanged();
-
 };
 
 }

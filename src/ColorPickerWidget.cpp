@@ -1,4 +1,5 @@
 #include "tp_qt_widgets/ColorPickerWidget.h"
+#include "tp_qt_widgets/ColorPickerDialog.h"
 #include "tp_qt_widgets/detail/ColorPicker_HSVCircle.h"
 #include "tp_qt_widgets/detail/ColorPicker_HSVSquare.h"
 #include "tp_qt_widgets/detail/ColorPicker_RGBSlider.h"
@@ -7,14 +8,10 @@
 #include "tp_utils/RefCount.h"
 
 #include <QBoxLayout>
+#include <QMenu>
 
 namespace tp_qt_widgets
 {
-
-namespace
-{
-
-}
 
 //##################################################################################################
 struct ColorPickerWidget::Private
@@ -35,7 +32,7 @@ struct ColorPickerWidget::Private
 };
 
 //##################################################################################################
-ColorPickerWidget::ColorPickerWidget(Mode mode, QWidget* parent):
+ColorPickerWidget::ColorPickerWidget(Mode mode, bool editMenu, QWidget* parent):
   QWidget(parent),
   d(new Private(this))
 {
@@ -44,14 +41,33 @@ ColorPickerWidget::ColorPickerWidget(Mode mode, QWidget* parent):
 
   switch(mode)
   {
-  case Mode::HSVCircle          : d->colorPicker = new detail::ColorPicker_HSVCircle(); break;
-  case Mode::HSVSquare          : d->colorPicker = new detail::ColorPicker_HSVSquare(); break;
-  case Mode::RGBSlider          : d->colorPicker = new detail::ColorPicker_RGBSlider(); break;
-  case Mode::RGBSliderHorizontal: d->colorPicker = new detail::ColorPicker_RGBSlider_Horizontal(); break;
+    case Mode::HSVCircle          : d->colorPicker = new detail::ColorPicker_HSVCircle(); break;
+    case Mode::HSVSquare          : d->colorPicker = new detail::ColorPicker_HSVSquare(); break;
+    case Mode::RGBSlider          : d->colorPicker = new detail::ColorPicker_RGBSlider(); break;
+    case Mode::RGBSliderHorizontal: d->colorPicker = new detail::ColorPicker_RGBSlider_Horizontal(); break;
   }
 
   l->addWidget(d->colorPicker);
   connect(d->colorPicker, &detail::ColorPicker::colorChanged, this, &ColorPickerWidget::colorChanged);
+
+  if(editMenu)
+  {
+    d->colorPicker->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(d->colorPicker, &QWidget::customContextMenuRequested, this, [&](const QPoint& pos)
+    {
+      QMenu menu(this);
+
+      menu.addAction("Edit", this, [&]
+      {
+        auto c = ColorPickerDialog::getColor(qColor(), "Select Color", Mode::RGBSlider);
+        if(!c.isValid())
+          return;
+        setColor(c);
+      });
+
+      menu.exec(d->colorPicker->mapToGlobal(pos));
+    });
+  }
 }
 
 //##################################################################################################

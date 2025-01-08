@@ -215,6 +215,9 @@ void ColorPicker_RGBSlider::paintEvent(QPaintEvent *event)
 //##################################################################################################
 void ColorPicker_RGBSlider::mouseMoveEvent(QMouseEvent* event)
 {
+  if(d->interaction == 0)
+    return ColorPicker::mouseMoveEvent(event);
+
   if(d->interaction)
     event->accept();
 
@@ -224,6 +227,9 @@ void ColorPicker_RGBSlider::mouseMoveEvent(QMouseEvent* event)
 //##################################################################################################
 void ColorPicker_RGBSlider::mousePressEvent(QMouseEvent* event)
 {
+  if(event->button() != Qt::LeftButton)
+    return ColorPicker::mousePressEvent(event);
+
   Geometry_lt geometry(this);
 
   auto collision = [&](char component)
@@ -247,6 +253,9 @@ void ColorPicker_RGBSlider::mousePressEvent(QMouseEvent* event)
 //##################################################################################################
 void ColorPicker_RGBSlider::mouseReleaseEvent(QMouseEvent* event)
 {
+  if(event->button() != Qt::LeftButton)
+    return ColorPicker::mouseReleaseEvent(event);
+
   if(d->interaction)
     event->accept();
 
