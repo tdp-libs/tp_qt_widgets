@@ -104,7 +104,7 @@ struct BlockingOperationDialog::Private
 BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& poll,
                                                  const QString& windowTitle,
                                                  QWidget* parent):
-  QDialog(parent, Qt::Window),
+  QDialog(parent),
   d(new Private(poll, windowTitle))
 {
   setWindowTitle(windowTitle);
