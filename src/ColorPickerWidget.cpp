@@ -63,6 +63,7 @@ ColorPickerWidget::ColorPickerWidget(Mode mode, bool editMenu, QWidget* parent):
         if(!c.isValid())
           return;
         setColor(c);
+        colorChanged();
       });
 
       menu.exec(d->colorPicker->mapToGlobal(pos));
