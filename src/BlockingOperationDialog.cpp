@@ -128,7 +128,7 @@ BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& po
 
   d->buttons = new QDialogButtonBox(QDialogButtonBox::Cancel);
   d->buttonLayout->addWidget(d->buttons);
-  connect(d->buttons, &QDialogButtonBox::rejected, this, [=]
+  connect(d->buttons, &QDialogButtonBox::rejected, this, [this]
   {
     d->progress.addError("Canceled!");
     d->progress.stop(true);
@@ -236,7 +236,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
       auto errorTimer = new QTimer(errorDialog);
       errorTimer->setSingleShot(true);
       errorTimer->start(0);
-      connect(errorTimer, &QTimer::timeout, dialog, [=]
+      connect(errorTimer, &QTimer::timeout, dialog, [errorDialog, dialog, ok, showCloseButton]
       {
         errorDialog->exec();
 

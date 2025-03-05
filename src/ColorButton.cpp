@@ -41,7 +41,7 @@ ColorButton::ColorButton(const QString& text, ColorPickerWidget::Mode mode, QWid
 {
   setStyleSheet("tp_qt_widgets--ColorButton{text-align:left; padding: 2px;}");
 
-  connect(this, &QAbstractButton::clicked, this, [=]
+  connect(this, &QAbstractButton::clicked, this, [this, text, mode]
   {
     QColor color = ColorPickerDialog::getColor(d->color, text, mode, this);
     if(color.isValid())
