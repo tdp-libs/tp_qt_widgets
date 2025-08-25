@@ -78,7 +78,12 @@ FileDialogLineEdit::FileDialogLineEdit(QWidget* parent):
       d->lineEdit->setText(str);
 
       if(!d->qSettingsPath.empty())
-        TPSettings::setValue(d->qSettingsPath, d->dir().toStdString());
+      {
+        /// Prev
+        // TPSettings::setValue(d->qSettingsPath, d->dir().toStdString());
+        /// New : This allows to store a FilePath, not just a Directory
+        TPSettings::setValue(d->qSettingsPath, d->lineEdit->text().toStdString());
+      }
 
       Q_EMIT d->q->selectionChanged();
     }
@@ -130,7 +135,7 @@ void FileDialogLineEdit::setQSettingsPath(const std::string& qSettingsPath)
   if(!d->qSettingsPath.empty())
   {
     d->initialDirectory = QString::fromStdString(TPSettings::value(d->qSettingsPath));
-    if(d->mode == FileDialogLineEdit::Mode::DirectoryMode)
+    if(d->mode == FileDialogLineEdit::Mode::DirectoryMode || d->mode == FileDialogLineEdit::Mode::OpenFileMode)
       d->lineEdit->setText(d->initialDirectory);
   }
 }

@@ -22,6 +22,11 @@ public:
                           QWidget* parent);
 
   //################################################################################################
+  BlockingOperationDialog(tp_utils::Progress* progress,
+                          const QString& windowTitle,
+                          QWidget* parent);
+
+  //################################################################################################
   ~BlockingOperationDialog() override;
 
   //################################################################################################
@@ -40,6 +45,16 @@ public:
   static bool exec(const std::function<bool()>& poll,
                    const QString& windowTitle,
                    QWidget* parent,
+                   const std::function<bool(BlockingOperationDialog* parent, tp_utils::Progress*)>& closure);
+
+  //################################################################################################
+  static bool exec(tp_utils::Progress* progress,
+                   const QString& windowTitle,
+                   QWidget* parent,
+                   const std::function<bool(BlockingOperationDialog* parent, tp_utils::Progress*)>& closure);
+
+  //################################################################################################
+  static bool exec(const QPointer<BlockingOperationDialog>& dialog,
                    const std::function<bool(BlockingOperationDialog* parent, tp_utils::Progress*)>& closure);
 
 protected:

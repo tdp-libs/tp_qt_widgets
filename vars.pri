@@ -57,6 +57,9 @@ HEADERS += inc/tp_qt_widgets/ExclusiveCollapsibleStack.h
 SOURCES += src/SpinSlider.cpp
 HEADERS += inc/tp_qt_widgets/SpinSlider.h
 
+SOURCES += src/WheelSafeScrollArea.cpp
+HEADERS += inc/tp_qt_widgets/WheelSafeScrollArea.h
+
 SOURCES += src/Globals.cpp
 HEADERS += inc/tp_qt_widgets/Globals.h
 

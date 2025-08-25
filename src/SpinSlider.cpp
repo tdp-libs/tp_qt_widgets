@@ -102,8 +102,14 @@ struct SpinSlider::Private
   //################################################################################################
   int sliderValueFromSpinValue(double value)
   {
+    assert(!std::isnan(value));
+    assert(!std::isinf(value));
+
     double min = spinBox->minimum();
     double max = spinBox->maximum();
+
+    if(min == max)
+      return 0;
 
     double f = (value-min) / (max-min);
 
@@ -118,8 +124,12 @@ struct SpinSlider::Private
 
     int sliderMax = slider->maximum();
 
-    int v = int((f*double(sliderMax))+0.5);
-    return std::clamp(v, 0, sliderMax);
+    float vS = (f*double(sliderMax))+0.5;
+
+    assert(!std::isnan(vS));
+    assert(!std::isinf(vS));
+
+    return std::clamp(int(vS), 0, sliderMax);
   }
 
   //################################################################################################

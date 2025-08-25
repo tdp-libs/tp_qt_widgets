@@ -22,6 +22,7 @@ namespace tp_qt_widgets
 struct BlockingOperationDialog::Private
 {
   std::function<bool()> poll;
+  tp_utils::Progress* progress{nullptr};
   std::string windowTitle;
   bool finish{false};
   bool ok=false;
@@ -38,11 +39,27 @@ struct BlockingOperationDialog::Private
     poll(poll_),
     windowTitle(windowTitle_.toStdString())
   {
-    changed.connect(progress.changed);
+    progress = &ourPogress;
+    changed.connect(progress->changed);
   }
 
   //################################################################################################
-  tp_utils::Progress progress = tp_utils::Progress([&]
+  Private(tp_utils::Progress* progress_, const QString& windowTitle_):
+    progress(progress_),
+    windowTitle(windowTitle_.toStdString())
+  {
+    poll = [this]
+    {
+      if(!progress->poll())
+        return false;
+      return !finish;
+    };
+
+    changed.connect(progress->changed);
+  }
+
+  //################################################################################################
+  tp_utils::Progress ourPogress = tp_utils::Progress([&]
   {
     if(!poll())
       return false;
@@ -64,7 +81,7 @@ struct BlockingOperationDialog::Private
       std::string text;
 
       {
-        const auto& messages = progress.allMessages();
+        const auto& messages = progress->allMessages();
         size_t maxRows = 500;
         size_t iMax = messages.size();
         size_t iFirst = (iMax>maxRows)?(iMax-maxRows):0;
@@ -98,6 +115,38 @@ struct BlockingOperationDialog::Private
   {
     return keepOpen->isChecked() && !keepOpen->isHidden();
   }
+
+  //################################################################################################
+  void createUI(BlockingOperationDialog* q, const QString& windowTitle)
+  {
+    q->setWindowTitle(windowTitle);
+    auto l = new QVBoxLayout(q);
+
+    progressBar = new tp_qt_widgets::ProgressBar(progress);
+    l->addWidget(progressBar);
+
+    messages = new QTextEdit();
+    l->addWidget(messages);
+    messages->setReadOnly(true);
+    messages->setWordWrapMode(QTextOption::NoWrap);
+
+    keepOpen = new QCheckBox("Keep open");
+    keepOpen->setChecked(TPSettings::value("BlockingOperationDialog_keepOpen")=="true");
+    l->addWidget(keepOpen);
+
+    buttonLayout = new QHBoxLayout();
+    buttonLayout->setContentsMargins(0,0,0,0);
+    l->addLayout(buttonLayout);
+
+    buttons = new QDialogButtonBox(QDialogButtonBox::Cancel);
+    buttonLayout->addWidget(buttons);
+    connect(buttons, &QDialogButtonBox::rejected, q, [this]
+    {
+      progress->addError("Canceled!");
+      progress->stop(true);
+      finish=true;
+    });
+  }
 };
 
 //##################################################################################################
@@ -107,33 +156,17 @@ BlockingOperationDialog::BlockingOperationDialog(const std::function<bool()>& po
   QDialog(parent),
   d(new Private(poll, windowTitle))
 {
-  setWindowTitle(windowTitle);
-  auto l = new QVBoxLayout(this);
+  d->createUI(this, windowTitle);
+}
 
-  d->progressBar = new tp_qt_widgets::ProgressBar(&d->progress);
-  l->addWidget(d->progressBar);
-
-  d->messages = new QTextEdit();
-  l->addWidget(d->messages);
-  d->messages->setReadOnly(true);
-  d->messages->setWordWrapMode(QTextOption::NoWrap);
-
-  d->keepOpen = new QCheckBox("Keep open");
-  d->keepOpen->setChecked(TPSettings::value("BlockingOperationDialog_keepOpen")=="true");
-  l->addWidget(d->keepOpen);
-
-  d->buttonLayout = new QHBoxLayout();
-  d->buttonLayout->setContentsMargins(0,0,0,0);
-  l->addLayout(d->buttonLayout);
-
-  d->buttons = new QDialogButtonBox(QDialogButtonBox::Cancel);
-  d->buttonLayout->addWidget(d->buttons);
-  connect(d->buttons, &QDialogButtonBox::rejected, this, [this]
-  {
-    d->progress.addError("Canceled!");
-    d->progress.stop(true);
-    d->finish=true;
-  });
+//##################################################################################################
+BlockingOperationDialog::BlockingOperationDialog(tp_utils::Progress* progress,
+                                                 const QString& windowTitle,
+                                                 QWidget* parent):
+  QDialog(parent),
+  d(new Private(progress, windowTitle))
+{
+  d->createUI(this, windowTitle);
 }
 
 //##################################################################################################
@@ -173,12 +206,30 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
 {
   QPointer<BlockingOperationDialog> dialog = new BlockingOperationDialog(poll, windowTitle, parent);
   TP_CLEANUP([&]{delete dialog;});
+  return exec(dialog, closure);
+}
+
+//##################################################################################################
+bool BlockingOperationDialog::exec(tp_utils::Progress* progress,
+                                   const QString& windowTitle,
+                                   QWidget* parent,
+                                   const std::function<bool(BlockingOperationDialog* parent, tp_utils::Progress*)>& closure)
+{
+  QPointer<BlockingOperationDialog> dialog = new BlockingOperationDialog(progress, windowTitle, parent);
+  TP_CLEANUP([&]{delete dialog;});
+  return exec(dialog, closure);
+}
+
+//##################################################################################################
+bool BlockingOperationDialog::exec(const QPointer<BlockingOperationDialog>& dialog,
+                                   const std::function<bool(BlockingOperationDialog* parent, tp_utils::Progress*)>& closure)
+{
   dialog->resize(1024, 768);
 
   auto timer = new QTimer(dialog);
   timer->setSingleShot(true);
   timer->start(0);
-  connect(timer, &QTimer::timeout, dialog, [&]
+  connect(timer, &QTimer::timeout, dialog, [&, dialog]
   {
     auto showCloseButton = [&]
     {
@@ -189,7 +240,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
       connect(dialog->d->buttons, &QDialogButtonBox::rejected, dialog, &QDialog::accept);
     };
 
-    bool ok = closure(dialog.data(), &dialog->d->progress);
+    bool ok = closure(dialog, dialog->d->progress);
 
     if(!dialog)
       return;
@@ -200,7 +251,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
     {
       if(dialog)
       {
-        dialog->d->progress.setProgress(1.0f);
+        dialog->d->progress->setProgress(1.0f);
         QPalette p = dialog->d->messages->palette();
         p.setColor(QPalette::Base, QColor(201, 255, 216));
         dialog->d->messages->setPalette(p);
@@ -224,7 +275,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
 
       auto text = new QPlainTextEdit();
       text->setWordWrapMode(QTextOption::NoWrap);
-      text->setPlainText(QString::fromStdString(dialog->d->progress.compileErrors()));
+      text->setPlainText(QString::fromStdString(dialog->d->progress->compileErrors()));
       l->addWidget(text);
 
       auto buttons = new QDialogButtonBox(QDialogButtonBox::Close);
@@ -251,7 +302,7 @@ bool BlockingOperationDialog::exec(const std::function<bool()>& poll,
     }
   });
 
-  if(dialog.data()->QDialog::exec() != QDialog::Accepted)
+  if(dialog->QDialog::exec() != QDialog::Accepted)
     return false;
 
   return dialog?dialog->d->ok:false;

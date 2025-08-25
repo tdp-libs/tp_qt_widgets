@@ -1,6 +1,6 @@
 #include "tp_qt_widgets/CollapsiblePanel.h"
+#include "tp_qt_widgets/WheelSafeScrollArea.h"
 
-#include <QScrollArea>
 #include <QVariantAnimation>
 #include <QBoxLayout>
 #include <QEvent>
@@ -12,7 +12,7 @@ namespace tp_qt_widgets
 struct CollapsiblePanel::Private
 {
   Q* q;
-  QScrollArea* contentArea{nullptr};
+  tp_qt_widgets::WheelSafeScrollArea* contentArea{nullptr};
 
   QVariantAnimation* contentAnimation{nullptr};
 
@@ -55,7 +55,7 @@ CollapsiblePanel::CollapsiblePanel(QWidget* parent):
   auto l = new QVBoxLayout(this);
   l->setContentsMargins(0,0,0,0);
 
-  d->contentArea = new QScrollArea();
+  d->contentArea = new tp_qt_widgets::WheelSafeScrollArea();
   d->contentArea->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
   l->addWidget(d->contentArea, 1);
   d->contentArea->installEventFilter(this);
